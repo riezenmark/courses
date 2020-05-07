@@ -1,0 +1,5 @@
+git init			//initialize repository
+git add your_file		//add file
+git status			//show added and modified files
+git commit -m "commit name"	//make commit
+git push			//send files to the remote repository

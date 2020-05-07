@@ -1,0 +1,3 @@
+javac *filename.java*	//compiles classes
+dir		//shows files in directory
+java *classname*	//runs class
