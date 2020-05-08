@@ -1,0 +1,9 @@
+nextByte()	//Read a byte
+nextShort()	//Read a short
+nextInt()	//Read an int
+nextLong()	//Read a long
+nextFloat()	//***
+nextDouble()	//***
+nextBoolean()	//***
+nextLine()	//Read a complete line
+next()		//Read a word
