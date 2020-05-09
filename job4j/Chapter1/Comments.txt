@@ -1,0 +1,2 @@
+To add library to the project, push on the .jar file name with the right mouse
+button and select option "Add as Library".
