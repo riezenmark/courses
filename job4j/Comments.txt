@@ -1,2 +1,10 @@
-To add library to the project, push on the .jar file name with the right mouse
-button and select option "Add as Library".
+To add library to the project as a jar, push on the .jar file name with the
+right mouse button and select option "Add as Library".
+
+To add library to the project with the help of maven dependencies, add
+them to the pom.xml file.
+
+mvn:
+clean   //deletes "target" directory
+install //builds src files
+test    //builds also test files

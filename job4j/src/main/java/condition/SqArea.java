@@ -1,7 +1,7 @@
 package condition;
 
 public class SqArea {
-    //p - perimeter, k = side a / side b
+    
     public static double square(int p, int k) {
         return Math.pow((double) p / (2 * k + 2), 2) * k;
     }
