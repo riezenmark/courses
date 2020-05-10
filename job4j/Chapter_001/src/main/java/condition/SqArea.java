@@ -3,7 +3,9 @@ package condition;
 public class SqArea {
     
     public static double square(int p, int k) {
-        return Math.pow((double) p / (2 * k + 2), 2) * k;
+        double h = (double) p / (2 * (k + 1));
+        double w = k * h;
+        return w * h;
     }
 
     public static void main(String[] args) {
