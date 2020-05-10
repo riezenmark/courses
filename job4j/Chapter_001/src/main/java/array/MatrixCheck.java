@@ -1,6 +1,17 @@
 package array;
 
+/**
+ * Class for checking if all the elements of 2D array in a row or in a colon
+ * are equal.
+ *
+ * @author riezenmark (riezenmark@gmail.com)
+ */
 public class MatrixCheck {
+    /**
+     * Checks equality of all elements in a row or in a colon.
+     * @param board 2D array to be examined.
+     * @return Examination result.
+     */
     public static boolean isWin(char[][] board) {
         boolean result = false;
         int countInRow = 0;
