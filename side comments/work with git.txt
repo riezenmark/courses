@@ -3,3 +3,7 @@ git add your_file		//add file
 git status			//show added and modified files
 git commit -m "commit name"	//make commit
 git push			//send files to the remote repository
+git branch			//show branches
+git reset --soft HEAD^		//delete latest commit
+git branch *name*		//creates new branch
+git checkout *name*		//switch to branch
