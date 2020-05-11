@@ -3,7 +3,23 @@ git add your_file		//add file
 git status			//show added and modified files
 git commit -m "commit name"	//make commit
 git push			//send files to the remote repository
+git push -f			//forced push
 git branch			//show branches
-git reset --soft HEAD^		//delete latest commit
+git branch -r			//show remote branches
 git branch *name*		//creates new branch
+git push origin *name*		//creates remote branch and pushes changes
 git checkout *name*		//switch to branch
+git checkout -b *name*		//create new branch and switch to it
+git branch -d *name*		//delete branch
+git push origin -d *name*	//delete remote branch
+git reset --soft HEAD^		//set HEAD to previous commit
+(HEAD~*number*)		//*number* commits back
+
+git rebase -i HEAD(^/~number)	//interactive rebasing of commits
+reword (r) - rename commit
+squash (s) - merge commit into another
+edit   (e) - edit commit (?)
+
+git commit --ammend -m		//rename latest commit
+git commit --ammend		//add files to latest commit
+git merge *name*		//merge branch *name* into current
