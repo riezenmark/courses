@@ -55,6 +55,7 @@ public class Tracker {
     public boolean replace(String id, Item item) {
         int index = this.findIndexById(id);
         if (index != -1) {
+            item.setId(generateId());
             items[index] = item;
             return true;
         }
@@ -96,7 +97,7 @@ public class Tracker {
     }
 
     /**
-     * Finds request by given name.
+     * Finds first request with given name.
      * @param key Request name.
      * @return Found request or null if request was not found.
      */
@@ -110,7 +111,7 @@ public class Tracker {
     }
 
     /**
-     * Finds request by given id.
+     * Finds request with given id.
      * @param id Request id.
      * @return Found request or null if request was not found.
      */
