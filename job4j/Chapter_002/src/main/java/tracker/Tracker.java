@@ -1,5 +1,6 @@
 package tracker;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -86,14 +87,7 @@ public class Tracker {
      * @return Copy of storage without null elements.
      */
     public Item[] getAll() {
-        Item[] result = new Item[position];
-        int newIndex = 0;
-        for (int index = 0; index < position; index++) {
-            if (items[index] != null) {
-                result[newIndex++] = items[index];
-            }
-        }
-        return result;
+        return Arrays.copyOf(items, this.position);
     }
 
     /**
