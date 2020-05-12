@@ -14,3 +14,6 @@ F8          //step over
 F7          //step into
 Shift + F8  //step out
 F9          //run to the next stop point (or to the end)
+
+To add methods with the help of IDEA, after adding fields go to:
+Code -> Generate. Ctrl + o for overriding methods.

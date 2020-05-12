@@ -1,7 +1,7 @@
 package oop;
 
 public class Indian extends Tiger {
-    public Indian (String name) {
+    public Indian(String name) {
         super(name);
     }
 
