@@ -1,2 +1,3 @@
 javac filename.java	//compiles classes
 java classname		//runs class
+java -jar filename.jar	//runs .jar

@@ -55,7 +55,7 @@ public class Tracker {
     public boolean replace(String id, Item item) {
         int index = this.findIndexById(id);
         if (index != -1) {
-            item.setId(generateId());
+            item.setId(items[index].getId());
             items[index] = item;
             return true;
         }
