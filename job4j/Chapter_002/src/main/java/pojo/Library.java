@@ -2,7 +2,7 @@ package pojo;
 
 public class Library {
     private static void show(Book... books) {   //varargs method
-        for(Book b : books) {
+        for (Book b : books) {
             System.out.println(b.getName() + " - " + b.getPages() + " pages");
         }
     }
@@ -31,7 +31,7 @@ public class Library {
 
         System.out.println("\nShow only books with name \"Clean Code\"\n");
 
-        for(Book b : books) {
+        for (Book b : books) {
             if (b.getName().equals("Clean Code")) {
                 System.out.println(b.getName() + " - " + b.getPages() + " pages");
             }
