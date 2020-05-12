@@ -6,7 +6,13 @@ public class Tiger extends Predator {
         System.out.println("Tiger object created.");
     }
 
+    public void voice() {   //overrides Predator.voice()
+        System.out.println("Roar!");
+    }
+
     public static void main(String[] args) {
         Tiger tiger = new Tiger("Tiger");
+
+        tiger.voice();  //"Roar!" instead of "Grrr!"
     }
 }
