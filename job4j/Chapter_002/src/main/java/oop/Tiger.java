@@ -6,6 +6,7 @@ public class Tiger extends Predator {
         System.out.println("Tiger object created.");
     }
 
+    @Override               //annotation to show that programmer remembers that there were such method in parent class
     public void voice() {   //overrides Predator.voice()
         System.out.println("Roar!");
     }
