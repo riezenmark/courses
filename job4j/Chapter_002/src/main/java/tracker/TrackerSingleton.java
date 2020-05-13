@@ -4,14 +4,15 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class TrackerSingleton {
-
-    private static final TrackerSingleton INSTANCE = new TrackerSingleton();
-
     private TrackerSingleton() {
     }
 
     public static TrackerSingleton getInstance() {
-        return INSTANCE;
+        return Holder.INSTANCE;
+    }
+
+    private static final class Holder {
+        private static final TrackerSingleton INSTANCE = new TrackerSingleton();
     }
 
     private final Item[] items = new Item[100];
