@@ -3,8 +3,19 @@ package tracker;
 import java.util.Arrays;
 import java.util.Random;
 
-public enum TrackerSingleton {
-    TRACKER;
+public class TrackerSingleton {
+
+    private static TrackerSingleton instance;
+
+    private TrackerSingleton() {
+    }
+
+    public static TrackerSingleton getInstance() {
+        if (instance == null) {
+            instance = new TrackerSingleton();
+        }
+        return instance;
+    }
 
     private final Item[] items = new Item[100];
     private int position = 0;

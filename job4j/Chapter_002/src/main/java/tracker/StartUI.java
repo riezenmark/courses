@@ -28,7 +28,7 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        TrackerSingleton tracker = TrackerSingleton.TRACKER;
+        TrackerSingleton tracker = TrackerSingleton.getInstance();
         new StartUI(new ValidateInput(new ConsoleInput()), tracker).init();
     }
 }

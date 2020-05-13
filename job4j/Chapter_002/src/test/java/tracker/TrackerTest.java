@@ -10,7 +10,7 @@ public class TrackerTest {
 
     @Before
     public void whenAddNewItemThenTrackerHasSameItem() {
-        TrackerSingleton tracker = TrackerSingleton.TRACKER;
+        TrackerSingleton tracker = TrackerSingleton.getInstance();
         Item item = new Item("test1");
         tracker.add(item);
         Item result = tracker.findById(item.getId());
@@ -19,7 +19,7 @@ public class TrackerTest {
 
     @Test
     public void whenReplaceNameThenReturnNewName() {
-        TrackerSingleton tracker = TrackerSingleton.TRACKER;
+        TrackerSingleton tracker = TrackerSingleton.getInstance();
         Item first = new Item("first");
         tracker.add(first);
         Item second = new Item("second");
@@ -29,7 +29,7 @@ public class TrackerTest {
 
     @After
     public void whenGetAll() {
-        TrackerSingleton tracker = TrackerSingleton.TRACKER;
+        TrackerSingleton tracker = TrackerSingleton.getInstance();
         assertThat(tracker.getAll()[2].getName(), is("second"));
     }
 }
