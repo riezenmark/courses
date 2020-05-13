@@ -1,7 +1,6 @@
 package tracker;
 
 public interface Input {
-    int key();
 
     String ask(String question);
 

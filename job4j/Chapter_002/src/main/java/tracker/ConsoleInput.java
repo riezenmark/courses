@@ -29,9 +29,4 @@ public class ConsoleInput implements Input {
         }
     }
 
-    @Override
-    public int key() {
-        return key;
-    }
-
 }
