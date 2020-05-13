@@ -3,7 +3,8 @@ package tracker;
 public class MenuTracker {
     private final Input input;
     private final Tracker tracker;
-    private final UserAction[] actions = new UserAction[7];
+    private final UserAction[] actions = new UserAction[8];
+    private int position = 0;
 
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
@@ -11,13 +12,17 @@ public class MenuTracker {
     }
 
     public void fillActions() {
-        this.actions[0] = new AddItem(0, "Add new Item");
-        this.actions[1] = new ShowAllItems(1, "Show all Items");
-        this.actions[2] = new EditItem(2, "Edit Item");
-        this.actions[3] = new DeleteItem(3, "Delete Item");
-        this.actions[4] = new FindItemById(4, "Find Item by Id");
-        this.actions[5] = new FindItemByName(5, "Find Item by Name");
-        this.actions[6] = new ExitProgram(6, "Exit program");
+        this.actions[position++] = new AddItem(0, "Add new Item");
+        this.actions[position++] = new ShowAllItems(1, "Show all Items");
+        this.actions[position++] = new EditItem(2, "Edit Item");
+        this.actions[position++] = new DeleteItem(3, "Delete Item");
+        this.actions[position++] = new FindItemById(4, "Find Item by Id");
+        this.actions[position++] = new FindItemByName(5, "Find Item by Name");
+        this.actions[position++] = new ExitProgram(6, "Exit Program");
+    }
+
+    public void addAction(UserAction action) {
+        this.actions[position++] = action;
     }
 
     public int getActionsLength() {
@@ -37,14 +42,10 @@ public class MenuTracker {
         return this.actions[key].execute(this.input, this.tracker);
     }
 
-    private static class AddItem implements UserAction {
-
-        private final int key;
-        private final String name;
+    private static class AddItem extends BaseAction {
 
         public AddItem(int key, String name) {
-            this.key = key;
-            this.name = name;
+            super(key, name);
         }
 
         @Override
@@ -56,21 +57,12 @@ public class MenuTracker {
             System.out.println("Item " + name + " added.");
             return true;
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", key, name);
-        }
     }
 
-    private static class ShowAllItems implements UserAction {
-
-        private final int key;
-        private final String name;
+    private static class ShowAllItems extends BaseAction {
 
         public ShowAllItems(int key, String name) {
-            this.key = key;
-            this.name = name;
+            super(key, name);
         }
 
         @Override
@@ -84,21 +76,12 @@ public class MenuTracker {
             return true;
         }
 
-        @Override
-        public String info() {
-            return String.format("%s. %s", key, name);
-        }
-
     }
 
-    private static class EditItem implements UserAction {
-
-        private final int key;
-        private final String name;
+    private static class EditItem extends BaseAction {
 
         public EditItem(int key, String name) {
-            this.key = key;
-            this.name = name;
+            super(key, name);
         }
 
         @Override
@@ -114,22 +97,12 @@ public class MenuTracker {
             }
             return true;
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", key, name);
-        }
-
     }
 
-    private static class DeleteItem implements UserAction {
-
-        private final int key;
-        private final String name;
+    private static class DeleteItem extends BaseAction {
 
         public DeleteItem(int key, String name) {
-            this.key = key;
-            this.name = name;
+            super(key, name);
         }
 
         @Override
@@ -143,22 +116,12 @@ public class MenuTracker {
             }
             return true;
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", key, name);
-        }
-
     }
 
-    private static class FindItemById implements UserAction {
-
-        private final int key;
-        private final String name;
+    private static class FindItemById extends BaseAction {
 
         public FindItemById(int key, String name) {
-            this.key = key;
-            this.name = name;
+            super(key, name);
         }
 
         @Override
@@ -173,22 +136,12 @@ public class MenuTracker {
             }
             return true;
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", key, name);
-        }
-
     }
 
-    private static class FindItemByName implements UserAction {
-
-        private final int key;
-        private final String name;
+    private static class FindItemByName extends BaseAction {
 
         public FindItemByName(int key, String name) {
-            this.key = key;
-            this.name = name;
+            super(key, name);
         }
 
         @Override
@@ -203,22 +156,12 @@ public class MenuTracker {
             }
             return true;
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", key, name);
-        }
-
     }
 
-    private static class ExitProgram implements UserAction {
-
-        private final int key;
-        private final String name;
+    private static class ExitProgram extends BaseAction {
 
         public ExitProgram(int key, String name) {
-            this.key = key;
-            this.name = name;
+            super(key, name);
         }
 
         @Override
@@ -226,11 +169,5 @@ public class MenuTracker {
             System.out.println("==== Exit ====");
             return false;
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", key, name);
-        }
-
     }
 }

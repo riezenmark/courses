@@ -47,7 +47,7 @@ public class StartUITest {
                                 + "3. Delete Item\n"
                                 + "4. Find Item by Id\n"
                                 + "5. Find Item by Name\n"
-                                + "6. Exit program\n"
+                                + "6. Exit Program\n"
                                 + "Select: 0\n"
                                 + "==== Create a new Item ====\n"
                                 + "Enter name of new Item: test name\n"
@@ -59,7 +59,7 @@ public class StartUITest {
                                 + "3. Delete Item\n"
                                 + "4. Find Item by Id\n"
                                 + "5. Find Item by Name\n"
-                                + "6. Exit program\n"
+                                + "6. Exit Program\n"
                                 + "Select: 6\n"
                                 + "==== Exit ====\n"
                 )
