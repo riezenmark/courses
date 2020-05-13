@@ -24,9 +24,28 @@ public class StubInput implements Input {
     }
 
     @Override
-    public int askInt(String question) {
-        key = Integer.parseInt(ask(question));
-        return key;
+    public int ask(String question, int[] range) {
+        try {
+            key = Integer.parseInt(ask(question));
+            boolean exists = false;
+            for (int value : range) {
+                if (value == key) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (exists) {
+                return key;
+            } else {
+                throw new MenuOutException("Range is " + range.length + ". Tried to access: " + key);
+            }
+        } catch (MenuOutException moe) {
+            System.out.println("Out of Menu Range.");
+            return 6;
+        } catch (NumberFormatException nfe) {
+            System.out.println("Not an Integer Number.");
+            return 6;
+        }
     }
 
 }

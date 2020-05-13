@@ -13,9 +13,20 @@ public class ConsoleInput implements Input {
     }
 
     @Override
-    public int askInt(String question) {
+    public int ask(String question, int[] range) { //if extends Exception then "trows *exception names* {
         key = Integer.parseInt(ask(question));
-        return key;
+        boolean exists = false;
+        for (int value : range) {
+            if (value == key) {
+                exists = true;
+                break;
+            }
+        }
+        if (exists) {
+            return key;
+        } else {
+            throw new MenuOutException("Range is " + range.length + ". Tried to access: " + key);
+        }
     }
 
     @Override

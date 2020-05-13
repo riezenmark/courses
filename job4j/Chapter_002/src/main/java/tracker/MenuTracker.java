@@ -1,40 +1,40 @@
 package tracker;
 
-public class CreateAction implements UserAction {
-    private final int key;
-    private final String name;
+public class MenuTracker {
+    private final Input input;
+    private final Tracker tracker;
+    private final UserAction[] actions = new UserAction[7];
 
-    public CreateAction(int key, String name) {
-        this.key = key;
-        this.name = name;
+    public MenuTracker(Input input, Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
     }
 
-    @Override
-    public String info() {
-        return String.format("%s. %s", key, name);
+    public void fillActions() {
+        this.actions[0] = new AddItem(0, "Add new Item");
+        this.actions[1] = new ShowAllItems(1, "Show all Items");
+        this.actions[2] = new EditItem(2, "Edit Item");
+        this.actions[3] = new DeleteItem(3, "Delete Item");
+        this.actions[4] = new FindItemById(4, "Find Item by Id");
+        this.actions[5] = new FindItemByName(5, "Find Item by Name");
+        this.actions[6] = new ExitProgram(6, "Exit program");
     }
 
-    @Override
-    public boolean execute(Input input, Tracker tracker) {
-        switch (input.key()) {
-            case 0:
-                return new AddItem(key, name).execute(input, tracker);
-            case 1:
-                return new ShowAllItems(key, name).execute(input, tracker);
-            case 2:
-                return new EditItem(key, name).execute(input, tracker);
-            case 3:
-                return new DeleteItem(key, name).execute(input, tracker);
-            case 4:
-                return new FindItemById(key, name).execute(input, tracker);
-            case 5:
-                return new FindItemByName(key, name).execute(input, tracker);
-            case 6:
-                return new ExitProgram(key, name).execute(input, tracker);
-            default:
-                System.out.println("Invalid key. Try again.");
-                return true;
+    public int getActionsLength() {
+        return this.actions.length;
+    }
+
+    public void show() {
+        System.out.println("Menu.");
+        for (UserAction action : this.actions) {
+            if (action != null) {
+                System.out.println(action.info());
+            }
         }
+    }
+
+    public boolean select(int key) {
+        return this.actions[key].execute(this.input, this.tracker);
     }
 
     private static class AddItem implements UserAction {

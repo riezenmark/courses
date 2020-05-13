@@ -1,37 +1,28 @@
 package tracker;
 
 public class StartUI {
+    private final Input input;
+    private final Tracker tracker;
+    private final int operations = 7;
 
-    public void init(Input input, Tracker tracker, UserAction[] actions) {
-        boolean run = true;
-        while (run) {
-            this.showMenu(actions);
-            int select = input.askInt("Select: ");
-            UserAction action = actions[select];
-            run = action.execute(input, tracker);
-        }
+    public StartUI(Input input, Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
     }
 
-    private void showMenu(UserAction[] actions) {
-        System.out.println("Menu.");
-        for (UserAction action : actions) {
-            System.out.println(action.info());
+    public void init() {
+        MenuTracker menu = new MenuTracker(this.input, this.tracker);
+        int[] range = new int[operations];
+        menu.fillActions();
+        for (int i = 0; i < menu.getActionsLength(); i++) {
+            range[i] = i;
         }
+        do {
+            menu.show();
+        } while (menu.select(input.ask("Select: ", range)));
     }
-
 
     public static void main(String[] args) {
-        Input input = new ConsoleInput();
-        Tracker tracker = new Tracker();
-        UserAction[] actions = {
-                new CreateAction(0, "Add a new Item"),
-                new CreateAction(1, "Show all Items"),
-                new CreateAction(2, "Edit Item"),
-                new CreateAction(3, "Delete Item"),
-                new CreateAction(4, "Find Item by Id"),
-                new CreateAction(5, "Find Item by Name"),
-                new CreateAction(6, "Exit program")
-        };
-        new StartUI().init(input, tracker, actions);
+        new StartUI(new ValidateInput(), new Tracker()).init();
     }
 }
