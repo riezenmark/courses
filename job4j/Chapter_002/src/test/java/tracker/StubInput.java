@@ -11,6 +11,8 @@ public class StubInput implements Input {
 
     @Override
     public String ask(String question) {
+        System.out.print(question);
+        System.out.println(answers[position]);
         return answers[position++];
     }
 
@@ -22,8 +24,6 @@ public class StubInput implements Input {
     @Override
     public int askInt(String question) {
         key = Integer.parseInt(ask(question));
-        System.out.print(question);
-        System.out.println(key);
         return key;
     }
 

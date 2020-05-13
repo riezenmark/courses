@@ -49,4 +49,16 @@ public class StartUITest {
         assertThat(action2.isCall(), is(true));
     }
 
+    @Test
+    public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
+        Tracker tracker = new Tracker();     // создаём Tracker
+        Input input = new StubInput(new String[]{"0", "test name", "2"});
+        UserAction[] actions = {
+                new CreateAction("Add a new Item"),
+                new StubAction(),
+                new StubAction()
+        };
+        new StartUI().init(input, tracker, actions);
+        assertThat(tracker.getAll()[0].getName(), is("test name"));
+    }
 }
