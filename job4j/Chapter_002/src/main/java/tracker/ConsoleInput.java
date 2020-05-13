@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 public class ConsoleInput implements Input {
     private int key;
-    private Scanner scanner = new Scanner(System.in);   //System.in is input stream
+    private final Scanner scanner = new Scanner(System.in);   //System.in is input stream
 
     @Override
     public String ask(String question) {
-        System.out.println(question);
+        System.out.print(question);
         return scanner.nextLine();
     }
 
@@ -23,8 +23,4 @@ public class ConsoleInput implements Input {
         return key;
     }
 
-    @Override
-    public boolean isValid() {
-        return true;
-    }
 }

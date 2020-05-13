@@ -15,47 +15,35 @@ public class StartUITest {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
 
     @Test
-    public void whenOne() {
+    public void whenStub() {
         StubInput input = new StubInput(
                 new String[] {"0"}
         );
-        StubAction action = new StubAction();
+        StubAction action = new StubAction(0);
         new StartUI().init(input, new Tracker(), new UserAction[] {action});
         assertThat(action.isCall(), is(true));
     }
 
     @Test
-    public void whenTwoTrue() {
+    public void whenSecondStubIsTrue() {
         StubInput input = new StubInput(
                 new String[] {"1"}
         );
-        StubAction action1 = new StubAction();
-        StubAction action2 = new StubAction();
+        StubAction action1 = new StubAction(0);
+        StubAction action2 = new StubAction(1);
         new StartUI().init(input, new Tracker(), new UserAction[] {action1, action2});
         assertThat(action2.isCall(), is(true));
     }
 
     @Test
-    public void whenTwoFalse() {
+    public void whenSecondStubIsFalse() {
         StubInput input = new StubInput(
                 new String[] {"1"}
         );
-        StubAction action1 = new StubAction();
-        StubAction action2 = new StubAction();
+        StubAction action1 = new StubAction(0);
+        StubAction action2 = new StubAction(1);
         new StartUI().init(input, new Tracker(), new UserAction[] {action1, action2});
         assertThat(action1.isCall(), is(false));
-    }
-
-    @Test
-    public void whenTwoBothTrue() {
-        StubInput input = new StubInput(
-                new String[] {"0", "1"}
-        );
-        StubAction action1 = new StubAction();
-        StubAction action2 = new StubAction();
-        new StartUI().init(input, new Tracker(), new UserAction[] {action1, action2});
-        assertThat(action1.isCall(), is(true));
-        assertThat(action2.isCall(), is(true));
     }
 
     @Test
@@ -63,9 +51,9 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "2"});
         UserAction[] actions = {
-                new CreateAction("Add a new Item"),
-                new StubAction(),
-                new StubAction()
+                new CreateAction(0, "Add a new Item"),
+                new StubAction(1),
+                new StubAction(2)
         };
         new StartUI().init(input, tracker, actions);
         assertThat(tracker.getAll()[0].getName(), is("test name"));
@@ -73,14 +61,12 @@ public class StartUITest {
 
     @Before
     public void loadOutput() {
-        System.out.println("execute before method");
         System.setOut(new PrintStream(this.out));
     }
 
     @After
     public void backOutput() {
         System.setOut(this.stdout);
-        System.out.println("execute after method");
     }
 
     @Test
@@ -88,9 +74,9 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "2"});
         UserAction[] actions = {
-                new CreateAction("Add a new Item"),
-                new StubAction(),
-                new StubAction()
+                new CreateAction(0, "Add a new Item"),
+                new StubAction(1),
+                new StubAction(2)
         };
         new StartUI().init(input, tracker, actions);
         assertThat(
@@ -99,16 +85,16 @@ public class StartUITest {
                         new StringBuilder()
                                 .append("Menu.\n")
                                 .append("0. Add a new Item\n")
-                                .append("1. Stub action\n")
-                                .append("2. Stub action\n")
+                                .append("1. Stub Action\n")
+                                .append("2. Stub Action\n")
                                 .append("Select: 0\n")
                                 .append("==== Create a new Item ====\n")
                                 .append("Enter name of new Item: test name\n")
                                 .append("Item test name added.\n")
                                 .append("Menu.\n")
                                 .append("0. Add a new Item\n")
-                                .append("1. Stub action\n")
-                                .append("2. Stub action\n")
+                                .append("1. Stub Action\n")
+                                .append("2. Stub Action\n")
                                 .append("Select: 2\n")
                                 .toString()
                 )
