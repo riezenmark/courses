@@ -2,9 +2,9 @@ package tracker;
 
 public class StartUI {
     private final Input input;
-    private final Tracker tracker;
+    private final TrackerSingleton tracker;
 
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(Input input, TrackerSingleton tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -28,6 +28,7 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
+        TrackerSingleton tracker = TrackerSingleton.TRACKER;
+        new StartUI(new ValidateInput(new ConsoleInput()), tracker).init();
     }
 }

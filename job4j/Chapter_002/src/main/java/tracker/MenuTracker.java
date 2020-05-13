@@ -2,11 +2,11 @@ package tracker;
 
 public class MenuTracker {
     private final Input input;
-    private final Tracker tracker;
+    private final TrackerSingleton tracker;
     private final UserAction[] actions = new UserAction[8];
     private int position = 0;
 
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, TrackerSingleton tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -49,7 +49,7 @@ public class MenuTracker {
         }
 
         @Override
-        public boolean execute(Input input, Tracker tracker) {
+        public boolean execute(Input input, TrackerSingleton tracker) {
             System.out.println("==== Create a new Item ====");
             String name = input.ask("Enter name of new Item: ");
             Item item = new Item(name);
@@ -66,7 +66,7 @@ public class MenuTracker {
         }
 
         @Override
-        public boolean execute(Input input, Tracker tracker) {
+        public boolean execute(Input input, TrackerSingleton tracker) {
             System.out.println("==== Show all Items ====");
             Item[] items = tracker.getAll();
             int index = 1;
@@ -85,7 +85,7 @@ public class MenuTracker {
         }
 
         @Override
-        public boolean execute(Input input, Tracker tracker) {
+        public boolean execute(Input input, TrackerSingleton tracker) {
             System.out.println("==== Edit Item ====");
             String id = input.ask("Enter id of Item You want to edit: ");
             String name = input.ask("Enter name of new Item: ");
@@ -106,7 +106,7 @@ public class MenuTracker {
         }
 
         @Override
-        public boolean execute(Input input, Tracker tracker) {
+        public boolean execute(Input input, TrackerSingleton tracker) {
             System.out.println("==== Delete Item ====");
             String id = input.ask("Enter id of Item You want to delete: ");
             if (tracker.delete(id)) {
@@ -125,7 +125,7 @@ public class MenuTracker {
         }
 
         @Override
-        public boolean execute(Input input, Tracker tracker) {
+        public boolean execute(Input input, TrackerSingleton tracker) {
             System.out.println("==== Find Item by Id ====");
             String id = input.ask("Enter id: ");
             Item item = tracker.findById(id);
@@ -145,7 +145,7 @@ public class MenuTracker {
         }
 
         @Override
-        public boolean execute(Input input, Tracker tracker) {
+        public boolean execute(Input input, TrackerSingleton tracker) {
             System.out.println("==== Find Item by Name ====");
             String name = input.ask("Enter name: ");
             Item item = tracker.findByName(name);
@@ -165,7 +165,7 @@ public class MenuTracker {
         }
 
         @Override
-        public boolean execute(Input input, Tracker tracker) {
+        public boolean execute(Input input, TrackerSingleton tracker) {
             System.out.println("==== Exit ====");
             return false;
         }
