@@ -5,16 +5,13 @@ import java.util.Random;
 
 public class TrackerSingleton {
 
-    private static TrackerSingleton instance;
+    private static final TrackerSingleton INSTANCE = new TrackerSingleton();
 
     private TrackerSingleton() {
     }
 
     public static TrackerSingleton getInstance() {
-        if (instance == null) {
-            instance = new TrackerSingleton();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     private final Item[] items = new Item[100];
