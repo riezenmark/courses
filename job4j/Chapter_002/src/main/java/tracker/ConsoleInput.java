@@ -22,4 +22,9 @@ public class ConsoleInput implements Input {
     public int key() {
         return key;
     }
+
+    @Override
+    public boolean isValid() {
+        return true;
+    }
 }

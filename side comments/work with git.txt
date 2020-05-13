@@ -23,3 +23,4 @@ edit   (e) - edit commit (?)
 git commit --ammend -m		//rename latest commit
 git commit --ammend		//add files to latest commit
 git merge *name*		//merge branch *name* into current
+git rm --cached *filename*	//remove file from tracking
