@@ -3,7 +3,6 @@ package tracker;
 import java.util.Scanner;
 
 public class ConsoleInput implements Input {
-    private int key;
     private final Scanner scanner = new Scanner(System.in);   //System.in is input stream
 
     @Override
@@ -14,7 +13,7 @@ public class ConsoleInput implements Input {
 
     @Override
     public int ask(String question, int[] range) { //if extends Exception then "trows *exception names* {
-        key = Integer.parseInt(ask(question));
+        int key = Integer.parseInt(ask(question));
         boolean exists = false;
         for (int value : range) {
             if (value == key) {
@@ -22,11 +21,10 @@ public class ConsoleInput implements Input {
                 break;
             }
         }
-        if (exists) {
-            return key;
-        } else {
+        if (!exists) {
             throw new MenuOutException("Range is " + range.length + ". Tried to access: " + key);
         }
+        return key;
     }
 
 }

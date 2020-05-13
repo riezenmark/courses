@@ -3,7 +3,6 @@ package tracker;
 public class StartUI {
     private final Input input;
     private final Tracker tracker;
-    private final int operations = 7;
 
     public StartUI(Input input, Tracker tracker) {
         this.input = input;
@@ -12,6 +11,7 @@ public class StartUI {
 
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
+        int operations = 7;
         int[] range = new int[operations];
         menu.fillActions();
         for (int i = 0; i < menu.getActionsLength(); i++) {

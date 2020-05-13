@@ -3,7 +3,6 @@ package tracker;
 public class StubInput implements Input {
     private final String[] answers;
     private int position = 0;
-    private int key;
 
     public StubInput(String[] answers) {
         this.answers = answers;
@@ -20,7 +19,7 @@ public class StubInput implements Input {
 
     @Override
     public int ask(String question, int[] range) {
-        key = Integer.parseInt(ask(question));
+        int key = Integer.parseInt(ask(question));
         boolean exists = false;
         for (int value : range) {
             if (value == key) {
@@ -28,11 +27,10 @@ public class StubInput implements Input {
                 break;
             }
         }
-        if (exists) {
-            return key;
-        } else {
+        if (!exists) {
             throw new MenuOutException("Range is " + range.length + ". Tried to access: " + key);
         }
+        return key;
     }
 
 }
