@@ -3,6 +3,9 @@ package pseudo;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
+import pseudo.shape.shapes.Square;
+import pseudo.shape.shapes.Triangle;
+
 import java.io.ByteArrayOutputStream;        //input/output, array of Bytes
 import java.io.PrintStream;
 import static org.hamcrest.core.Is.is;
@@ -38,10 +41,10 @@ public class PaintTest {
                 new String(out.toByteArray()),
                 is(
                         new StringBuilder()
-                                .append("+------+")
-                                .append("|      |")
-                                .append("|      |")
-                                .append("+------+")
+                                .append("++++++++")
+                                .append("+      +")
+                                .append("+      +")
+                                .append("++++++++\n")
                                 .toString()
                 )
         );
@@ -57,7 +60,7 @@ public class PaintTest {
                                 .append("   +   ")
                                 .append("  + +  ")
                                 .append(" +   + ")
-                                .append("+++++++")
+                                .append("+++++++\n")
                                 .toString()
                 )
         );

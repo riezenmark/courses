@@ -1,7 +1,7 @@
 package pseudo;
 
 import org.junit.Test;
-import pseudo.Square;
+import pseudo.shape.shapes.Square;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -15,10 +15,10 @@ public class SquareTest {
                 square.draw(),
                 is(
                         new StringBuilder()
-                                .append("+------+")
-                                .append("|      |")
-                                .append("|      |")
-                                .append("+------+")
+                                .append("++++++++")
+                                .append("+      +")
+                                .append("+      +")
+                                .append("++++++++")
                                 .toString()
                 )
         );
