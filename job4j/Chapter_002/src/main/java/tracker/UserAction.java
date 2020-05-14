@@ -1,11 +1,26 @@
 package tracker;
 
+/**
+ * An interface for user actions.
+ */
 public interface UserAction {
 
+    /**
+     * @return Key of action.
+     */
     int key();
 
-    boolean execute(Input input, TrackerSingleton tracker);
+    /**
+     * Executes action.
+     * @param input Input.
+     * @param tracker Tracker.
+     * @return True if operation was successful and false if wasn't.
+     */
+    boolean execute(Input input, Tracker tracker);
 
+    /**
+     * @return Information about action.
+     */
     String info();
 
 }

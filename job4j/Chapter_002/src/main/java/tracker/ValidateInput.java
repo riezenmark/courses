@@ -1,18 +1,41 @@
 package tracker;
 
+/**
+ * Decorator class for input validation.
+ */
 public class ValidateInput implements Input {
 
+    /**
+     * Input for validation.
+     */
     private final Input input;
 
+    /**
+     * Gets input for validation and sets it as a local field.
+     * @param input Input.
+     */
     public ValidateInput(final Input input) {
         this.input = input;
     }
 
+    /**
+     * Runs ask method from received input class.
+     * @param question Question to print.
+     * @return String that was returned from received input class.
+     */
     @Override
     public String ask(String question) {
         return this.input.ask(question);
     }
 
+    /**
+     * Prints question on the screen and returns integer user input,
+     * or prints an error message if input was not a number from range
+     * and asks for a new input.
+     * @param question Question to print.
+     * @param range Range.
+     * @return Integer input.
+     */
     @Override
     public int ask(String question, int[] range) {
         boolean valid = false;

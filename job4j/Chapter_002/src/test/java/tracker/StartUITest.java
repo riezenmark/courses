@@ -1,4 +1,4 @@
-/*package tracker;
+package tracker;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,14 +14,6 @@ public class StartUITest {
     PrintStream stdout = System.out;
     ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-    @Test
-    public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
-        TrackerSingleton tracker = TrackerSingleton.TRACKER;
-        Input input = new StubInput(new String[]{"0", "test name", "6"});
-        new StartUI(input, tracker).init();
-        assertThat(tracker.getAll()[0].getName(), is("test name"));
-    }
-
     @Before
     public void loadOutput() {
         System.setOut(new PrintStream(this.out));
@@ -34,7 +26,7 @@ public class StartUITest {
 
     @Test
     public void whenUserAddItemThenOutputIs() {
-        TrackerSingleton tracker = TrackerSingleton.TRACKER;
+        Tracker tracker = Tracker.getInstance();
         Input input = new StubInput(new String[]{"0", "test name", "6"});
         new StartUI(input, tracker).init();
         assertThat(
@@ -66,4 +58,3 @@ public class StartUITest {
         );
     }
 }
- */

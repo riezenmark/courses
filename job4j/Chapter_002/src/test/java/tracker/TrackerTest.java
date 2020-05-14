@@ -9,8 +9,13 @@ import static org.junit.Assert.assertThat;
 public class TrackerTest {
 
     @Before
+    public void startFirst() {
+        whenAddNewItemThenTrackerHasSameItem();
+    }
+
+    @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
-        TrackerSingleton tracker = TrackerSingleton.getInstance();
+        Tracker tracker = Tracker.getInstance();
         Item item = new Item("test1");
         tracker.add(item);
         Item result = tracker.findById(item.getId());
@@ -19,7 +24,7 @@ public class TrackerTest {
 
     @Test
     public void whenReplaceNameThenReturnNewName() {
-        TrackerSingleton tracker = TrackerSingleton.getInstance();
+        Tracker tracker = Tracker.getInstance();
         Item first = new Item("first");
         tracker.add(first);
         Item second = new Item("second");
@@ -27,9 +32,14 @@ public class TrackerTest {
         assertThat(tracker.getAll()[1].getName(), is("first"));
     }
 
-    @After
+    @Test
     public void whenGetAll() {
-        TrackerSingleton tracker = TrackerSingleton.getInstance();
+        Tracker tracker = Tracker.getInstance();
         assertThat(tracker.getAll()[2].getName(), is("second"));
+    }
+
+    @After
+    public void startLatest() {
+        whenGetAll();
     }
 }
