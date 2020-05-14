@@ -8,15 +8,24 @@ import java.io.PrintStream;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Class for testing the class Paint
+ */
 public class PaintTest {
     private final PrintStream stdOut = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
+    /**
+     * Sets output stream to memory as array of Bytes
+     */
     @Before
     public void loadOutput() {
         System.setOut(new PrintStream(this.out));
     }
 
+    /**
+     * Sets standard output stream
+     */
     @After
     public void backOutput() {
         System.setOut(this.stdOut);
