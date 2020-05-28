@@ -1,8 +1,9 @@
 package list;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ConvertList2Array {
+public class ConvertList {
     public int[][] toArray(List<Integer> list, int rows) {
         int cells = list.size() / rows;
         if (list.size() % rows > 0) {
@@ -21,5 +22,15 @@ public class ConvertList2Array {
             }
         }
         return array;
+    }
+
+    public static List<Integer> convert (List<int[]> list) {
+        List<Integer> result = new ArrayList<>();
+        for (int[] row : list) {
+            for (int value : row) {
+                result.add(value);
+            }
+        }
+        return result;
     }
 }
