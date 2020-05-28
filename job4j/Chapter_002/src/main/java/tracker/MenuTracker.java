@@ -1,5 +1,7 @@
 package tracker;
 
+import java.util.ArrayList;
+
 /**
  * Class for work with menu.
  */
@@ -15,11 +17,7 @@ public class MenuTracker {
     /**
      * Menu items.
      */
-    private final UserAction[] actions = new UserAction[8];
-    /**
-     * Current number of menu items.
-     */
-    private int position = 0;
+    private final ArrayList<UserAction> actions = new ArrayList<>();
 
     /**
      * Creates an instance of a class for given input and tracker.
@@ -35,13 +33,13 @@ public class MenuTracker {
      * Adds actions in array of menu items.
      */
     public void fillActions() {
-        this.actions[position++] = new AddItem(0, "Add new Item");
-        this.actions[position++] = new ShowAllItems(1, "Show all Items");
-        this.actions[position++] = new EditItem(2, "Edit Item");
-        this.actions[position++] = new DeleteItem(3, "Delete Item");
-        this.actions[position++] = new FindItemById(4, "Find Item by Id");
-        this.actions[position++] = new FindItemByName(5, "Find Item by Name");
-        this.actions[position++] = new ExitProgram(6, "Exit Program");
+        this.actions.add(new AddItem(0, "Add new Item"));
+        this.actions.add(new ShowAllItems(1, "Show all Items"));
+        this.actions.add(new EditItem(2, "Edit Item"));
+        this.actions.add(new DeleteItem(3, "Delete Item"));
+        this.actions.add(new FindItemById(4, "Find Item by Id"));
+        this.actions.add(new FindItemByName(5, "Find Item by Name"));
+        this.actions.add(new ExitProgram(6, "Exit Program"));
     }
 
     /**
@@ -49,7 +47,7 @@ public class MenuTracker {
      * @param action Action to add.
      */
     public void addAction(UserAction action) {
-        this.actions[position++] = action;
+        this.actions.add(action);
     }
 
     /**
@@ -57,7 +55,7 @@ public class MenuTracker {
      * @return Length of menu items array.
      */
     public int getActionsLength() {
-        return this.actions.length;
+        return this.actions.size();
     }
 
     /**
@@ -79,7 +77,7 @@ public class MenuTracker {
      * @return True if operation was successful and false if wasn't.
      */
     public boolean select(int key) {
-        return this.actions[key].execute(this.input, this.tracker);
+        return this.actions.get(key).execute(this.input, this.tracker);
     }
 
     /**
@@ -136,7 +134,7 @@ public class MenuTracker {
         @Override
         public boolean execute(Input input, Tracker tracker) {
             System.out.println("==== Show all Items ====");
-            Item[] items = tracker.getAll();
+            ArrayList<Item> items = tracker.getAll();
             int index = 1;
             for (Item item : items) {
                 System.out.println(index++ + "\t" + item.getName() + "\t" + item.getId());

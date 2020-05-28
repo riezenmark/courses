@@ -1,6 +1,6 @@
 package tracker;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -28,13 +28,11 @@ public class Tracker {
         private static final Tracker INSTANCE = new Tracker();
     }
 
-    private final Item[] items = new Item[100];
-    private int position = 0;
+    private final ArrayList<Item> items = new ArrayList<>();
 
-    public Item add(Item item) {
+    public void add(Item item) {
         item.setId(this.generateId());
-        this.items[this.position++] = item;
-        return item;
+        this.items.add(item);
     }
 
     /**
@@ -55,8 +53,8 @@ public class Tracker {
     public boolean replace(String id, Item item) {
         int index = this.findIndexById(id);
         if (index != -1) {
-            item.setId(items[index].getId());
-            items[index] = item;
+            item.setId(items.get(index).getId());
+            items.add(index, item);
             return true;
         }
         return false;
@@ -70,9 +68,7 @@ public class Tracker {
     public boolean delete(String id) {
         int index = this.findIndexById(id);
         if (index != -1) {
-            items[index] = null;
-            System.arraycopy(items, index + 1, items, index, position - 1 - index);
-            position--;
+            items.remove(index);
             return true;
         }
         return false;
@@ -82,8 +78,8 @@ public class Tracker {
      * Gets all requests.
      * @return Copy of array of requests.
      */
-    public Item[] getAll() {
-        return Arrays.copyOf(items, this.position);
+    public ArrayList<Item> getAll() {
+        return new ArrayList<>(this.items);
     }
 
     /**
@@ -120,8 +116,8 @@ public class Tracker {
      * @return Index of found request or -1.
      */
     private int findIndexById(String id) {
-        for (int index = 0; index < position; index++) {
-            if (items[index] != null && items[index].getId().equals(id)) {
+        for (int index = 0; index < this.items.size(); index++) {
+            if (items.get(index) != null && items.get(index).getId().equals(id)) {
                 return index;
             }
         }

@@ -29,13 +29,13 @@ public class TrackerTest {
         tracker.add(first);
         Item second = new Item("second");
         tracker.add(second);
-        assertThat(tracker.getAll()[1].getName(), is("first"));
+        assertThat(tracker.getAll().get(1).getName(), is("first"));
     }
 
     @Test
     public void whenGetAll() {
         Tracker tracker = Tracker.getInstance();
-        assertThat(tracker.getAll()[2].getName(), is("second"));
+        assertThat(tracker.getAll().get(2).getName(), is("second"));
     }
 
     @After
