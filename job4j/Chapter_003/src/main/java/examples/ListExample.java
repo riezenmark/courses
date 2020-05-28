@@ -38,7 +38,24 @@ public class ListExample {
     }
 
     public static void main(String[] args) {
-        List<User> users = new ArrayList<User>();
+        List<User> users1 = new ArrayList<>();
+        users1.add(new User("C"));
+        users1.add(new User("A"));
+        users1.add(new User("B"));
+        System.out.println(users1);
+
+        users1.sort(
+                new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        return o1.name.compareTo(o2.name);
+                    }
+                }
+        );
+
+        System.out.println(users1);
+
+        List<User> users = new ArrayList<>();
         users.add(new User("First"));
         boolean result = users.contains(new User("First"));
         System.out.println(result);
