@@ -22,10 +22,7 @@ public class SortUser {
     }
 
     public List<User> sortByAllFields(List<User> list) {
-        Comparator<User> comparator = (o1, o2) -> {
-            int result = o1.getName().compareTo(o2.getName());
-            return result != 0 ? result : Integer.compare(o1.getAge(), o2.getAge());
-        };
+        Comparator<User> comparator = Comparator.comparing(User::getName).thenComparingInt(User::getAge);
         list.sort(comparator);
         return list;
     }
