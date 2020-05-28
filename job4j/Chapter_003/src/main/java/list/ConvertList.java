@@ -24,7 +24,7 @@ public class ConvertList {
         return array;
     }
 
-    public static List<Integer> convert (List<int[]> list) {
+    public static List<Integer> convert(List<int[]> list) {
         List<Integer> result = new ArrayList<>();
         for (int[] row : list) {
             for (int value : row) {
