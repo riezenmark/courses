@@ -1,11 +1,79 @@
 package examples;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class ListExample {
+
+    static class User {
+        private final String name;
+
+        public User(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            User user = (User) o;
+            return Objects.equals(name, user.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
+
+        @Override
+        public String toString() {
+            return "User{"
+                    + "name='" + name + '\''
+                    + '}';
+        }
+    }
+
     public static void main(String[] args) {
+        List<User> users = new ArrayList<User>();
+        users.add(new User("First"));
+        boolean result = users.contains(new User("First"));
+        System.out.println(result);
+        User user = new User("Second");
+        users.add(user);
+        System.out.println(users.contains(user));
+
+        users.addAll(Arrays.asList(new User("Third"), new User("Fourth")));
+        System.out.println("toString");
+        for (User u : users) {
+            System.out.println(u);
+        }
+
+        Iterator<User> iterator = users.iterator();
+        System.out.println("Iterator");
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+
+        System.out.println("forEach Consumer");
+        users.forEach(
+                new Consumer<User>() {
+                    @Override
+                    public void accept(User u) {
+                        System.out.println(u);
+                    }
+                }
+        );
+
+        System.out.println("forEach lambda");
+        users.forEach(u -> System.out.println(u));
+
+        System.out.println("forEach method reference");
+        users.forEach(System.out::println);
+
         List<Integer> list = new LinkedList<>();
         list.add(425);
         Integer value = list.get(0);
