@@ -32,18 +32,20 @@ public class Logic {
                                   String destPassport, String destRequisite,
                                   double amount) {
         boolean transferred = false;
-        List<Account> srcAccounts = users.get(new User(srcPassport));
-        int srcAccountIndex = srcAccounts.indexOf(new Account(srcRequisite));
-        if (srcAccountIndex != -1) {
-            Account srcAccount = srcAccounts.get(srcAccountIndex);
-            if (srcAccount.getValue() >= amount) {
-                List<Account> destAccounts = users.get(new User(destPassport));
-                int destAccountIndex = destAccounts.indexOf(new Account(destRequisite));
-                if (destAccountIndex != -1) {
-                    Account destAccount = destAccounts.get(destAccountIndex);
-                    srcAccount.setValue(srcAccount.getValue() - amount);
-                    destAccount.setValue(destAccount.getValue() + amount);
-                    transferred = true;
+        if (amount > 0) {
+            List<Account> srcAccounts = users.get(new User(srcPassport));
+            int srcAccountIndex = srcAccounts.indexOf(new Account(srcRequisite));
+            if (srcAccountIndex != -1) {
+                Account srcAccount = srcAccounts.get(srcAccountIndex);
+                if (srcAccount.getValue() >= amount) {
+                    List<Account> destAccounts = users.get(new User(destPassport));
+                    int destAccountIndex = destAccounts.indexOf(new Account(destRequisite));
+                    if (destAccountIndex != -1) {
+                        Account destAccount = destAccounts.get(destAccountIndex);
+                        srcAccount.setValue(srcAccount.getValue() - amount);
+                        destAccount.setValue(destAccount.getValue() + amount);
+                        transferred = true;
+                    }
                 }
             }
         }
