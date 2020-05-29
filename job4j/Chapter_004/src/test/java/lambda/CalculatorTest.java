@@ -1,4 +1,4 @@
-package interfaces;
+package lambda;
 
 import org.junit.Test;
 import java.util.ArrayList;
@@ -16,6 +16,18 @@ public class CalculatorTest {
                 0, 3, 1,
                 (value, index) -> (double) value + index,
                 result -> buffer.add(result)
+        );
+        assertThat(buffer, is(Arrays.asList(1D, 2D, 3D)));
+    }
+
+    @Test
+    public void whenAdd1Until3UsingMathUtil() {
+        Calculator calc = new Calculator();
+        List<Double> buffer = new ArrayList<>();
+        calc.calculate(
+                0, 3, 1,
+                MathUtil::add, //static call
+                buffer::add // non-static call
         );
         assertThat(buffer, is(Arrays.asList(1D, 2D, 3D)));
     }

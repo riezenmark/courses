@@ -1,4 +1,4 @@
-package interfaces;
+package lambda;
 
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -57,5 +57,13 @@ public class Calculator {
                 },
                 result -> System.out.println(result)
         );
+
+        calc.calculate(
+                0, 10, 2,
+                MathUtil::add,
+                result -> System.out.println(result)
+        );
     }
+
+
 }

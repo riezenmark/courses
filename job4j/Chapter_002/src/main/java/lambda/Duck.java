@@ -1,4 +1,4 @@
-package interfaces;
+package lambda;
 
 public class Duck implements FlyingBird, Waterfowl {
 
