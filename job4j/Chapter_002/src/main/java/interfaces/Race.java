@@ -1,4 +1,4 @@
-package lambda;
+package interfaces;
 
 public class Race {
     public static void main(String[] args) {
