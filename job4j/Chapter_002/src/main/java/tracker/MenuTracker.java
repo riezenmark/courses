@@ -1,6 +1,7 @@
 package tracker;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * Class for work with menu.
@@ -15,6 +16,10 @@ public class MenuTracker {
      */
     private final Tracker tracker;
     /**
+     * Output buffer.
+     */
+    private final Consumer<String> outputBuffer;
+    /**
      * Menu items.
      */
     private final ArrayList<UserAction> actions = new ArrayList<>();
@@ -24,9 +29,10 @@ public class MenuTracker {
      * @param input Input (user/test/another).
      * @param tracker Tracker.
      */
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, Tracker tracker, Consumer<String> outputBuffer) {
         this.input = input;
         this.tracker = tracker;
+        this.outputBuffer = outputBuffer;
     }
 
     /**
@@ -63,10 +69,10 @@ public class MenuTracker {
      * of every action in menu items array.
      */
     public void show() {
-        System.out.println("Menu.");
+        outputBuffer.accept("Menu.\n");
         for (UserAction action : this.actions) {
             if (action != null) {
-                System.out.println(action.info());
+                outputBuffer.accept(action.info() + "\n");
             }
         }
     }
@@ -77,7 +83,7 @@ public class MenuTracker {
      * @return True if operation was successful and false if wasn't.
      */
     public boolean select(int key) {
-        return this.actions.get(key).execute(this.input, this.tracker);
+        return this.actions.get(key).execute(this.input, this.tracker, this.outputBuffer);
     }
 
     /**
@@ -101,12 +107,12 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker) {
-            System.out.println("==== Create a new Item ====");
+        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+            outputBuffer.accept("==== Create a new Item ====\n");
             String name = input.ask("Enter name of new Item: ");
             Item item = new Item(name);
             tracker.add(item);
-            System.out.println("Item " + name + " added.");
+            outputBuffer.accept("Item " + name + " added.\n");
             return true;
         }
     }
@@ -132,12 +138,12 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker) {
-            System.out.println("==== Show all Items ====");
+        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+            outputBuffer.accept("==== Show all Items ====\n");
             ArrayList<Item> items = tracker.getAll();
             int index = 1;
             for (Item item : items) {
-                System.out.println(index++ + "\t" + item.getName() + "\t" + item.getId());
+                outputBuffer.accept(index++ + "\t" + item.getName() + "\t" + item.getId() + "\n");
             }
             return true;
         }
@@ -165,15 +171,15 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker) {
-            System.out.println("==== Edit Item ====");
+        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+            outputBuffer.accept("==== Edit Item ====\n");
             String id = input.ask("Enter id of Item You want to edit: ");
             String name = input.ask("Enter name of new Item: ");
             Item item = new Item(name);
             if (tracker.replace(id, item)) {
-                System.out.println("Item was edited.");
+                outputBuffer.accept("Item was edited.\n");
             } else {
-                System.out.println("Item was NOT edited.");
+                outputBuffer.accept("Item was NOT edited.\n");
             }
             return true;
         }
@@ -200,13 +206,13 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker) {
-            System.out.println("==== Delete Item ====");
+        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+            outputBuffer.accept("==== Delete Item ====\n");
             String id = input.ask("Enter id of Item You want to delete: ");
             if (tracker.delete(id)) {
-                System.out.println("Item was deleted.");
+                outputBuffer.accept("Item was deleted.\n");
             } else {
-                System.out.println("Item was NOT deleted.");
+                outputBuffer.accept("Item was NOT deleted.\n");
             }
             return true;
         }
@@ -234,14 +240,14 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker) {
-            System.out.println("==== Find Item by Id ====");
+        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+            outputBuffer.accept("==== Find Item by Id ====\n");
             String id = input.ask("Enter id: ");
             Item item = tracker.findById(id);
             if (item != null) {
-                System.out.println("Found Item " + item.getName() + " with id " + id);
+                outputBuffer.accept("Found Item " + item.getName() + " with id " + id + "\n");
             } else {
-                System.out.println("Item was NOT found.");
+                outputBuffer.accept("Item was NOT found.\n");
             }
             return true;
         }
@@ -269,14 +275,14 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker) {
-            System.out.println("==== Find Item by Name ====");
+        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+            outputBuffer.accept("==== Find Item by Name ====\n");
             String name = input.ask("Enter name: ");
             Item item = tracker.findByName(name);
             if (item != null) {
-                System.out.println("Found Item " + name + " with id " + item.getId());
+                outputBuffer.accept("Found Item " + name + " with id " + item.getId() + "\n");
             } else {
-                System.out.println("Item was NOT found.");
+                outputBuffer.accept("Item was NOT found.\n");
             }
             return true;
         }
@@ -303,8 +309,8 @@ public class MenuTracker {
          * @return false.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker) {
-            System.out.println("==== Exit ====");
+        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+            outputBuffer.accept("==== Exit ====\n");
             return false;
         }
     }

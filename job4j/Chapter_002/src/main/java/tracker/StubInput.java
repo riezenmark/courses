@@ -1,5 +1,7 @@
 package tracker;
 
+import java.util.function.Consumer;
+
 /**
  * Class for input from array of Strings.
  */
@@ -12,13 +14,18 @@ public class StubInput implements Input {
      * Current input String array position.
      */
     private int position = 0;
+    /**
+     * Output buffer.
+     */
+    private final Consumer<String> outputBuffer;
 
     /**
      * Adds input Strings to array.
      * @param answers Input Strings array.
      */
-    public StubInput(String[] answers) {
+    public StubInput(String[] answers, Consumer<String> outputBuffer) {
         this.answers = answers;
+        this.outputBuffer = outputBuffer;
     }
 
     /**
@@ -29,9 +36,9 @@ public class StubInput implements Input {
      */
     @Override
     public String ask(String question) {
-        System.out.print(question);
+        outputBuffer.accept(question);
         String answer = answers[position];
-        System.out.println(answer);
+        outputBuffer.accept(answer + "\n");
         position++;
         return answer;
     }

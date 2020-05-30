@@ -1,5 +1,7 @@
 package tracker;
 
+import java.util.function.Consumer;
+
 /**
  * Class for starting User Interface.
  */
@@ -12,10 +14,15 @@ public class StartUI {
      * Tracker.
      */
     private final Tracker tracker;
+    /**
+     * 0 buffer.
+     */
+    private final Consumer<String> outputBuffer;
 
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(Input input, Tracker tracker, Consumer<String> outputBuffer) {
         this.input = input;
         this.tracker = tracker;
+        this.outputBuffer = outputBuffer;
     }
 
     /**
@@ -25,12 +32,13 @@ public class StartUI {
      * choose exit menu item.
      */
     public void init() {
-        MenuTracker menu = new MenuTracker(this.input, this.tracker);
+        MenuTracker menu = new MenuTracker(this.input, this.tracker, this.outputBuffer);
         int operations = 8;
         int[] range = new int[operations];
         menu.fillActions();
         /*
         UserAction someNewAction = UserAction() {   //anonymous class
+
         }
         menu.addAction(someNewAction);
          */
@@ -48,6 +56,7 @@ public class StartUI {
      */
     public static void main(String[] args) {
         Tracker tracker = Tracker.getInstance();
-        new StartUI(new ValidateInput(new ConsoleInput()), tracker).init();
+        new StartUI(new ValidateInput(new ConsoleInput(System.out::print), System.out::print),
+                tracker, System.out::print).init();
     }
 }

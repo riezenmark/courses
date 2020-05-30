@@ -1,6 +1,7 @@
 package tracker;
 
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 /**
  * Class for work with user inputs from console.
@@ -10,6 +11,14 @@ public class ConsoleInput implements Input {
      * Scanner object.
      */
     private final Scanner scanner = new Scanner(System.in);   //System.in is input stream
+    /**
+     * Output buffer.
+     */
+    private final Consumer<String> outputBuffer;
+
+    public ConsoleInput(Consumer<String> outputBuffer) {
+        this.outputBuffer = outputBuffer;
+    }
 
     /**
      * Prints question on the screen and returns user input String.
@@ -18,7 +27,7 @@ public class ConsoleInput implements Input {
      */
     @Override
     public String ask(String question) {
-        System.out.print(question);
+        outputBuffer.accept(question);
         return scanner.nextLine();
     }
 

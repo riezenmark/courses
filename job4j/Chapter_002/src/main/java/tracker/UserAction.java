@@ -1,5 +1,7 @@
 package tracker;
 
+import java.util.function.Consumer;
+
 /**
  * An interface for user actions.
  */
@@ -16,7 +18,7 @@ public interface UserAction {
      * @param tracker Tracker.
      * @return True if operation was successful and false if wasn't.
      */
-    boolean execute(Input input, Tracker tracker);
+    boolean execute(Input input, Tracker tracker, Consumer<String> output);
 
     /**
      * @return Information about action.

@@ -1,5 +1,7 @@
 package tracker;
 
+import java.util.function.Consumer;
+
 /**
  * Decorator class for input validation.
  */
@@ -9,13 +11,18 @@ public class ValidateInput implements Input {
      * Input for validation.
      */
     private final Input input;
+    /**
+     * Output buffer.
+     */
+    private final Consumer<String> outputBuffer;
 
     /**
      * Gets input for validation and sets it as a local field.
      * @param input Input.
      */
-    public ValidateInput(final Input input) {
+    public ValidateInput(final Input input, Consumer<String> outputBuffer) {
         this.input = input;
+        this.outputBuffer = outputBuffer;
     }
 
     /**
@@ -46,10 +53,10 @@ public class ValidateInput implements Input {
                 valid = true;
             } catch (MenuOutException moe) {
                 //moe.printStackTrace();    //full exception log output
-                System.out.println("This is not a Key from Menu. Please,"
-                        + " input an Integer Number in range from 0 to " + (range.length - 1));
+                outputBuffer.accept("This is not a Key from Menu. Please,"
+                        + " input an Integer Number in range from 0 to " + (range.length - 1) + "\n");
             } catch (NumberFormatException nfe) {
-                System.out.println("Invalid Input. This is not an Integer Number. Please, try Again.");
+                outputBuffer.accept("Invalid Input. This is not an Integer Number. Please, try Again.\n");
             }
         } while (!valid);
         return value;

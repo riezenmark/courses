@@ -1,34 +1,29 @@
 package tracker;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.function.Consumer;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class StartUITest {
-    PrintStream stdout = System.out;
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-    @Before
-    public void loadOutput() {
-        System.setOut(new PrintStream(this.out));
-    }
-
-    @After
-    public void backOutput() {
-        System.setOut(this.stdout);
-    }
+    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final Consumer<String> output = new Consumer<>() {
+        private final PrintStream stdout = new PrintStream(out);
+        @Override
+        public void accept(String s) {
+            stdout.print(s);
+        }
+    };
 
     @Test
     public void whenUserAddItemThenOutputIs() {
         Tracker tracker = Tracker.getInstance();
-        Input input = new StubInput(new String[]{"0", "test name", "6"});
-        new StartUI(input, tracker).init();
+        Input input = new ValidateInput(new StubInput(new String[]{"0", "test name", "6"}, output), output);
+        new StartUI(input, tracker, output).init();
         assertThat(
                 this.out.toString(),
                 is(
