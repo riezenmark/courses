@@ -18,7 +18,7 @@ public class ProfilesTest {
                 new Profile(new Profile.Address("Town", "Avenue", 3, 4)),
                 new Profile(new Profile.Address("Village", "Prospect", 5, 6))
         ));
-        List<Profile.Address> addresses = p.collectAddresses(profiles);
+        List<Profile.Address> addresses = p.collectSortedUniqueAddresses(profiles);
         assertThat(addresses.stream().allMatch(
                 address -> address.getClass().getName().contains("Profile.Address")
                 ),
