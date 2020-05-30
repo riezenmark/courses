@@ -1,9 +1,10 @@
 package stream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 import stream.School.Student;
@@ -14,20 +15,23 @@ import static org.junit.Assert.assertThat;
 public class SchoolTest {
     School school = new School();
 
-    public List<Student> convert(List<Integer> scores, Function<Integer, Student> op) {
-        List<Student> students = new ArrayList<>();
-        scores.forEach(
-                s -> students.add(op.apply(s))
-        );
-        return students;
-    }
-
-    List<Student> students = convert(Arrays.asList(
-            90, 70, 80, 20, 10,
-            30, 1, 40, 100, 60,
-            50, 69, 49, 51, 64
-            ),
-            Student::new);
+    List<Student> students = Arrays.asList(
+            new Student("A", 90),
+            new Student("B", 70),
+            new Student("G", 80),
+            new Student("D", 20),
+            new Student("C", 10),
+            new Student("E", 30),
+            new Student("F", 1),
+            new Student("I", 40),
+            new Student("H", 100),
+            new Student("O", 60),
+            new Student("M", 50),
+            new Student("N", 69),
+            new Student("L", 49),
+            new Student("K", 51),
+            new Student("J", 64)
+            );
 
     @Test
     public void whenA() {
@@ -53,5 +57,11 @@ public class SchoolTest {
         assertThat(result.stream().allMatch(
                 student -> student.getScore() > 0 && student.getScore() < 50),
                 is(true));
+    }
+
+    @Test
+    public void whenToMap() {
+        Map<String, Student> result = school.toMap(students);
+        assertThat(result.get("C").getScore(), is(10));
     }
 }
