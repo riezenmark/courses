@@ -38,19 +38,11 @@ public class ListExample {
     }
 
     public static void main(String[] args) {
-        List<User> users1 = new ArrayList<>();
-        users1.add(new User("C"));
-        users1.add(new User("A"));
-        users1.add(new User("B"));
+        List<User> users1 = new ArrayList<>(List.of(new User("C"), new User("A"), new User("B")));
         System.out.println(users1);
 
         users1.sort(
-                new Comparator<User>() {
-                    @Override
-                    public int compare(User o1, User o2) {
-                        return o1.name.compareTo(o2.name);
-                    }
-                }
+                Comparator.comparing(o -> o.name)
         );
 
         System.out.println(users1);

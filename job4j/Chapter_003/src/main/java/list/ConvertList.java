@@ -1,7 +1,8 @@
 package list;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ConvertList {
     public int[][] toArray(List<Integer> list, int rows) {
@@ -25,12 +26,6 @@ public class ConvertList {
     }
 
     public static List<Integer> convert(List<int[]> list) {
-        List<Integer> result = new ArrayList<>();
-        for (int[] row : list) {
-            for (int value : row) {
-                result.add(value);
-            }
-        }
-        return result;
+        return list.stream().flatMapToInt(Arrays::stream).boxed().collect(Collectors.toList());
     }
 }

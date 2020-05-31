@@ -1,6 +1,8 @@
 package stream;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,18 +52,37 @@ public class StreamUsage {
                 .map(v -> String.format(" %s", v))
                 .forEach(System.out::print);
 
+        System.out.println();
+
         List.of(2, 4, 3, 4).stream()
                 .dropWhile(v -> v % 2 == 0)
                 .map(v -> String.format(" %s", v))
                 .forEach(System.out::print);
+
+        System.out.println();
 
         Stream.of(1, null, 2, null, 3)
                 .flatMap(Stream::ofNullable)
                 .map(v -> String.format(" %s", v))
                 .forEach(System.out::print);
 
+        System.out.println();
+
         Stream.iterate(0, i -> i < 10, i -> i + 1)
                 .map(v -> String.format(" %s", v))
                 .forEach(System.out::print);
+
+        System.out.println();
+
+        List.of(5, 1, 2).forEach(System.out::print);
+
+        System.out.println();
+
+        Set.of(5, 1, 2).forEach(System.out::print);
+
+        System.out.println();
+
+        Map.of("first", 1, "second", 2)
+                .forEach((v, k) -> System.out.println(String.format("%s %s", v, k)));
     }
 }

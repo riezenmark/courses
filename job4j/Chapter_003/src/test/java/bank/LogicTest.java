@@ -14,8 +14,7 @@ public class LogicTest {
     public void whenAddUserThenMapHasUser() {
         User user = new User("Sam", "1232 0564");
         logic.addUser(user);
-        Map<User, List<Account>> expected = new HashMap<>();
-        expected.put(user, new ArrayList<>());
+        Map<User, List<Account>> expected = Map.of(user, new ArrayList<>());
         assertThat(logic.getUsers(), is(expected));
     }
 
@@ -25,9 +24,10 @@ public class LogicTest {
         User user2 = new User("Ian", "6349 0872");
         logic.addUser(user1);
         logic.addUser(user2);
-        Map<User, List<Account>> expected = new HashMap<>();
-        expected.put(user1, new ArrayList<>());
-        expected.put(user2, new ArrayList<>());
+        Map<User, List<Account>> expected = Map.of(
+                user1, new ArrayList<>(),
+                user2, new ArrayList<>()
+        );
         assertThat(logic.getUsers(), is(expected));
     }
 
@@ -49,11 +49,12 @@ public class LogicTest {
         Account account2 = new Account(300000, "123981300098");
         logic.addAccountToUser("1232 0564", account1);
         logic.addAccountToUser("1232 0564", account2);
-        Map<User, List<Account>> expected = new HashMap<>();
-        expected.put(user, new ArrayList<>(Arrays.asList(
-                new Account(50000, "343262361423"),
-                new Account(300000, "123981300098")
-        )));
+        Map<User, List<Account>> expected = Map.of(
+                user, new ArrayList<>(List.of(
+                        new Account(50000, "343262361423"),
+                        new Account(300000, "123981300098")
+                ))
+        );
         assertThat(logic.getUsers(), is(expected));
     }
 
@@ -66,9 +67,9 @@ public class LogicTest {
         logic.addAccountToUser("1232 0564", account1);
         logic.addAccountToUser("1232 0564", account2);
         logic.deleteAccountFromUser("1232 0564",
-                new Account(50000, "343262361423"));
+                logic.getActualAccount("1232 0564", "343262361423"));
         logic.deleteAccountFromUser("1232 0564",
-                new Account(300000, "123981300098"));
+                logic.getActualAccount("1232 0564", "123981300098"));
         assertThat(logic.getUsers().get(user).isEmpty(), is(true));
     }
 
@@ -80,10 +81,7 @@ public class LogicTest {
         Account account2 = new Account(300000, "123981300098");
         logic.addAccountToUser("1232 0564", account1);
         logic.addAccountToUser("1232 0564", account2);
-        List<Account> expected = new ArrayList<>(Arrays.asList(
-                new Account(50000, "343262361423"),
-                new Account(300000, "123981300098")
-        ));
+        List<Account> expected = List.of(account1, account2);
         assertThat(logic.getUserAccounts("1232 0564"), is(expected));
     }
 

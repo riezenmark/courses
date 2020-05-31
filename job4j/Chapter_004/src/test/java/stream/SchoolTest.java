@@ -29,7 +29,7 @@ public class SchoolTest {
             new Student("L", 49),
             new Student("K", 51),
             new Student("J", 64)
-            );
+    );
 
     @Test
     public void whenA() {
@@ -43,7 +43,7 @@ public class SchoolTest {
     public void whenB() {
         List<Student> result = school.collect(students,
                 student -> student.getScore() >= 50
-                && student.getScore() < 70);
+                        && student.getScore() < 70);
         assertThat(result.stream().allMatch(
                 student -> student.getScore() >= 50 && student.getScore() < 70),
                 is(true));

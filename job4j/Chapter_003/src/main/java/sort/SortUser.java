@@ -11,19 +11,12 @@ public class SortUser {
     }
 
     public List<User> sortByNameLength(List<User> list) {
-        Comparator<User> comparator = new Comparator<>() {
-            @Override
-            public int compare(User o1, User o2) {
-                return Integer.compare(o1.getName().length(), o2.getName().length());
-            }
-        };
-        list.sort(comparator);
+        list.sort(Comparator.comparingInt(o -> o.getName().length()));
         return list;
     }
 
     public List<User> sortByAllFields(List<User> list) {
-        Comparator<User> comparator = Comparator.comparing(User::getName).thenComparingInt(User::getAge);
-        list.sort(comparator);
+        list.sort(Comparator.comparing(User::getName).thenComparingInt(User::getAge));
         return list;
     }
 }

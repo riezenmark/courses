@@ -18,8 +18,8 @@ public class Calculator {
     }
 
     public void calculate(int start, int finish, int value,
-                         BiFunction<Integer, Integer, Double> op,
-                         Consumer<Double> media) {
+                          BiFunction<Integer, Integer, Double> op,
+                          Consumer<Double> media) {
         for (int index = start; index != finish; index++) {
             media.accept(op.apply(value, index));
         }

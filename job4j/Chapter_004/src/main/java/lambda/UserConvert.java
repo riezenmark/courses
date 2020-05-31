@@ -34,7 +34,9 @@ public class UserConvert {
 
     public interface Wrapper<T> {
         T get();
+
         void set(T value);
+
         boolean isEmpty();
     }
 
@@ -73,7 +75,7 @@ public class UserConvert {
          */
 
         names.forEach(
-                n ->  {
+                n -> {
                     last.ensureCapacity(0);
                     last.append(n);
                 }
@@ -81,7 +83,7 @@ public class UserConvert {
 
         Wrapper<Exception> ex = new ExpHold<>();
         names.forEach(
-                n ->  {
+                n -> {
                     try {
                         badMethod();
                     } catch (Exception e) {

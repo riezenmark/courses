@@ -1,11 +1,9 @@
 package search;
 
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 public class PriorityQueue {
-    private LinkedList<Task> tasks = new LinkedList<>();
+    private final LinkedList<Task> tasks = new LinkedList<>();
 
     /**
      * Метод должен вставлять в нужную позицию элемент.

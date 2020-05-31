@@ -1,8 +1,8 @@
 package search;
 
 public class Task {
-    private String description;
-    private int priority;
+    private final String description;
+    private final int priority;
 
     public Task(String description, int priority) {
         this.description = description;
