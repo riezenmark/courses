@@ -14,7 +14,6 @@ public class SchoolTest {
     School school = new School();
 
     List<Student> students = Arrays.asList(
-            new Student("A", 90),
             new Student("B", 70),
             new Student("G", 80),
             new Student("D", 20),
@@ -22,6 +21,7 @@ public class SchoolTest {
             new Student("E", 30),
             new Student("F", 1),
             new Student("I", 40),
+            new Student("A", 90),
             new Student("H", 100),
             new Student("O", 60),
             new Student("M", 50),
@@ -61,5 +61,23 @@ public class SchoolTest {
     public void whenToMap() {
         Map<String, Student> result = school.toMap(students);
         assertThat(result.get("C").getScore(), is(10));
+    }
+
+    @Test
+    public void whenLevelOf() {
+        List<Student> result = school.levelOf(students, 70);
+        StringBuilder resultingString = new StringBuilder();
+        result.forEach(student -> resultingString.append(student.getSurname()));
+
+        List<Student> expected = Arrays.asList(
+                new Student("H", 100),
+                new Student("A", 90),
+                new Student("G", 80),
+                new Student("B", 70)
+        );
+        StringBuilder expectedString = new StringBuilder();
+        expected.forEach(student -> expectedString.append(student.getSurname()));
+
+        assertThat(resultingString.toString(), is(expectedString.toString()));
     }
 }
