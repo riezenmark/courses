@@ -139,27 +139,22 @@ public class LogicTest {
     }
 
     @Test
-    public void whenThereIsNotSuchSourceUserThenException() {
+    public void whenThereIsNoSuchSourceUserThenFalse() {
         User user1 = new User("Sam", "1232 0564");
         User user2 = new User("Ian", "6349 0872");
         logic.addUser(user1);
         logic.addUser(user2);
         logic.addAccountToUser("1232 0564", new Account(50000, "343262361423"));
         logic.addAccountToUser("6349 0872", new Account(300000, "123981300098"));
-        boolean transferred = true;
-        try {
-            logic.transferMoney(
-                    "error", "343262361423",
-                    "6349 0872", "123981300098",
-                    30000);
-        } catch (NullPointerException npe) {
-            transferred = false;
-        }
+        boolean transferred = logic.transferMoney(
+                "error", "343262361423",
+                "6349 0872", "123981300098",
+                30000);
         assertThat(transferred, is(false));
     }
 
     @Test
-    public void whenThereIsNotSuchSourceAccount() {
+    public void whenThereIsNoSuchSourceAccount() {
         User user1 = new User("Sam", "1232 0564");
         User user2 = new User("Ian", "6349 0872");
         logic.addUser(user1);
@@ -174,27 +169,22 @@ public class LogicTest {
     }
 
     @Test
-    public void whenThereIsNotSuchDestinationUserThenException() {
+    public void whenThereIsNoSuchDestinationUserThenFalse() {
         User user1 = new User("Sam", "1232 0564");
         User user2 = new User("Ian", "6349 0872");
         logic.addUser(user1);
         logic.addUser(user2);
         logic.addAccountToUser("1232 0564", new Account(50000, "343262361423"));
         logic.addAccountToUser("6349 0872", new Account(300000, "123981300098"));
-        boolean transferred = true;
-        try {
-            logic.transferMoney(
-                    "1232 0564", "343262361423",
-                    "error", "123981300098",
-                    30000);
-        } catch (NullPointerException npe) {
-            transferred = false;
-        }
+        boolean transferred = logic.transferMoney(
+                "1232 0564", "343262361423",
+                "error", "123981300098",
+                30000);
         assertThat(transferred, is(false));
     }
 
     @Test
-    public void whenThereIsNotSuchDestinationAccount() {
+    public void whenThereIsNoSuchDestinationAccount() {
         User user1 = new User("Sam", "1232 0564");
         User user2 = new User("Ian", "6349 0872");
         logic.addUser(user1);

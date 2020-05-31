@@ -6,13 +6,13 @@ public class User {
     private String name;
     private final String passport;
 
-    public User(String passport) {
-        this.passport = passport;
-    }
-
     public User(String name, String passport) {
         this.name = name;
         this.passport = passport;
+    }
+
+    public String getPassport() {
+        return passport;
     }
 
     @Override

@@ -9,7 +9,7 @@ public class Logic {
     private final Map<User, List<Account>> users = new HashMap<>();
 
     public void addUser(User user) {
-        users.put(user, new ArrayList<>());
+        users.putIfAbsent(user, new ArrayList<>());
     }
 
     public void deleteUser(User user) {
@@ -17,35 +17,42 @@ public class Logic {
     }
 
     public void addAccountToUser(String passport, Account account) {
-        users.get(new User(passport)).add(account);
+        User user = findByPassport(passport);
+        if (user != null) {
+            this.users.get(user).add(account);
+        }
     }
 
     public void deleteAccountFromUser(String passport, Account account) {
-        users.get(new User(passport)).remove(account);
+        User user = findByPassport(passport);
+        if (user != null) {
+            this.users.get(user).remove(account);
+        }
     }
 
     public List<Account> getUserAccounts(String passport) {
-        return users.get(new User(passport));
+        User user = findByPassport(passport);
+        return users.get(user);
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite,
-                                  String destPassport, String destRequisite,
+                                  String destinationPassport, String destinationRequisite,
                                   double amount) {
         boolean transferred = false;
-        if (amount > 0) {
-            List<Account> srcAccounts = users.get(new User(srcPassport));
-            int srcAccountIndex = srcAccounts.indexOf(new Account(srcRequisite));
-            if (srcAccountIndex != -1) {
-                Account srcAccount = srcAccounts.get(srcAccountIndex);
-                if (srcAccount.getValue() >= amount) {
-                    List<Account> destAccounts = users.get(new User(destPassport));
-                    int destAccountIndex = destAccounts.indexOf(new Account(destRequisite));
-                    if (destAccountIndex != -1) {
-                        Account destAccount = destAccounts.get(destAccountIndex);
-                        srcAccount.setValue(srcAccount.getValue() - amount);
-                        destAccount.setValue(destAccount.getValue() + amount);
-                        transferred = true;
-                    }
+        if (
+                srcPassport != null
+                && srcRequisite != null
+                && destinationPassport != null
+                && destinationRequisite != null
+                && amount > 0
+        ) {
+            final Account srcAccount = getActualAccount(srcPassport, srcRequisite);
+            if (srcAccount != null && srcAccount.getValue() >= amount) {
+                final Account destinationAccount = getActualAccount(destinationPassport, destinationRequisite);
+                if (destinationAccount != null) {
+                    srcAccount.setValue(srcAccount.getValue() - amount);
+                    destinationAccount.setValue(destinationAccount.getValue() + amount);
+                    transferred = true;
                 }
             }
         }
@@ -53,11 +60,24 @@ public class Logic {
     }
 
     public Map<User, List<Account>> getUsers() {
-        Map<User, List<Account>> copy = new HashMap<>();
-        for (User user : users.keySet()) {
-            copy.put(user, users.get(user));
-        }
-        return copy;
+        return Map.copyOf(users);
     }
 
+    public Account getActualAccount(String passport, String requisites) {
+        Account account = null;
+        if (this.getUserAccounts(passport) != null) {
+            account = this.getUserAccounts(passport).stream()
+                    .filter(
+                            acc -> acc.getRequisites().equals(requisites)
+                    ).findFirst().orElse(null);
+        }
+        return account;
+    }
+
+    public User findByPassport(String passport) {
+        return this.users.keySet().stream()
+                .filter(
+                        user -> user.getPassport().equals(passport)
+                ).findFirst().orElse(null);
+    }
 }
