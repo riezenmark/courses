@@ -1,4 +1,4 @@
-package collections;
+package iterator;
 
 import org.junit.Test;
 
