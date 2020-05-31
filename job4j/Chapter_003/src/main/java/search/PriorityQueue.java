@@ -13,7 +13,7 @@ public class PriorityQueue {
      */
     public void put(Task task) {
         int position = 0;
-        for (Task t : tasks) {
+        for (var t : tasks) {
             if (task.getPriority() > t.getPriority()) {
                 position++;
             }
