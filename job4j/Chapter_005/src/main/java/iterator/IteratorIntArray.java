@@ -1,6 +1,7 @@
 package iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class IteratorIntArray implements Iterator {
 
@@ -18,6 +19,10 @@ public class IteratorIntArray implements Iterator {
 
     @Override
     public Object next() {
-        return values[index++];
+        if (hasNext()) {
+            return values[index++];
+        } else {
+            throw (new NoSuchElementException());
+        }
     }
 }
