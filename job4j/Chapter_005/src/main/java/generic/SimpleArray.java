@@ -10,7 +10,7 @@ public class SimpleArray<T> implements Iterable<T> {
     private final T[] array;
     private final Iterator<T> iterator = new Iterator<>() {
 
-        int cursor = 0;
+        private int cursor = 0;
 
         @Override
         public boolean hasNext() {
