@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 public class SimpleArray<T> implements Iterable<T> {
 
     private final int length;
-    private T[] array;
+    private final T[] array;
     private final Iterator<T> iterator = new Iterator<>() {
 
         int cursor = 0;
@@ -54,7 +54,7 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void set(int index, T model) throws ArrayIndexOutOfBoundsException {
-        if (index > 0 && index < this.length) {
+        if (index >= 0 && index < this.length) {
             this.array[index] = model;
         } else {
             throw (new ArrayIndexOutOfBoundsException());
@@ -62,7 +62,7 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void remove(int index) throws ArrayIndexOutOfBoundsException {
-        if (index > 0 && index < this.length) {
+        if (index >= 0 && index < this.length) {
             this.array[index] = null;
             for (int i = index; i < this.length - 1; i++) {
                 this.array[index] = this.array[index + 1];
@@ -74,7 +74,7 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public T get(int index) throws ArrayIndexOutOfBoundsException {
-        if (index > 0 && index < this.length) {
+        if (index >= 0 && index < this.length) {
             return this.array[index];
         } else {
             throw (new ArrayIndexOutOfBoundsException());
