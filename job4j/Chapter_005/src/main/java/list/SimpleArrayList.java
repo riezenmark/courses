@@ -40,7 +40,7 @@ public class SimpleArrayList<E> implements Iterable<E> {
 
             @SuppressWarnings("unchecked")
             @Override
-            public E next() {
+            public E next() throws NoSuchElementException {
                 checkForModification();
                 if (hasNext()) {
                     return (E) container[cursor++];
