@@ -8,7 +8,7 @@ public class IteratorsConvert {
     Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         ArrayList<Integer> result = new ArrayList<>();
         it.forEachRemaining(integerIterator -> integerIterator.forEachRemaining(result::add));
-        return (new ArrayList<>(result)).iterator();
+        return result.iterator();
     }
 
 }
