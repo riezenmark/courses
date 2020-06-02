@@ -74,6 +74,15 @@ public class SimpleLinkedListTest {
         iterator.next();
     }
 
+    @Test
+    public void hasCycleTest() {
+        SimpleLinkedList<Integer> sl = new SimpleLinkedList<>();
+        sl.add(1);
+        sl.add(2);
+        sl.add(3);
+        assertThat(sl.hasCycle(), is(false));
+    }
+
     @Test(expected = NoSuchElementException.class)
     public void iteratorExceptionTest() {
         Iterator<Integer> iterator = list.iterator();
@@ -83,6 +92,15 @@ public class SimpleLinkedListTest {
         iterator.next();
         iterator.next();
         iterator.next();
+    }
+
+    @Test
+    public void clearTest() {
+        list.clear();
+        assertThat(list.isEmpty(), is(true));
+        assertThat(list.size(), is(0));
+        assertNull(list.delete());
+        assertNull(list.get(42));
     }
 
     @Test

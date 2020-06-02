@@ -3,6 +3,7 @@ package list;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SimpleLinkedList<E> implements Iterable<E> {
 
@@ -76,6 +77,25 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return result;
     }
 
+    boolean hasCycle() {
+        boolean result = false;
+        if (!empty) {
+            Node<E> start = first;
+            for (int i = 0; i < size - 1; i++) {
+                for (int j = i + 1; j < size; j++) {
+                    Node<E> node = start.next;
+                    if (start.equals(node)) {
+                        result = true;
+                        i = size;
+                        break;
+                    }
+                }
+                start = start.next;
+            }
+        }
+        return result;
+    }
+
     public E get(int index) {
         Node<E> node = getNode(index);
         if (node != null) {
@@ -143,6 +163,25 @@ public class SimpleLinkedList<E> implements Iterable<E> {
 
         Node(E data) {
             this.data = data;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Node<?> node = (Node<?>) o;
+            return Objects.equals(data, node.data)
+                    && Objects.equals(next, node.next)
+                    && Objects.equals(prev, node.prev);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(data, next, prev);
         }
     }
 
