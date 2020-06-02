@@ -10,12 +10,16 @@ public class SimpleArrayList<E> implements Iterable<E> {
     private int length = 10;
     private Object[] container;
     private int modCount = 0;
+    private boolean empty = true;
 
     public SimpleArrayList() {
         container = new Object[length];
     }
 
     public SimpleArrayList(int length) {
+        if (length < 0) {
+            length = 0;
+        }
         this.length = length;
         container = new Object[length];
     }
@@ -23,6 +27,10 @@ public class SimpleArrayList<E> implements Iterable<E> {
     public SimpleArrayList(Object[] container) {
         this.container = container;
         this.length = container.length;
+        this.position = this.length;
+        if (position > 0) {
+            this.empty = false;
+        }
     }
 
     @Override
@@ -35,7 +43,7 @@ public class SimpleArrayList<E> implements Iterable<E> {
 
             @Override
             public boolean hasNext() {
-                return length > cursor;
+                return position > cursor;
             }
 
             @SuppressWarnings("unchecked")
@@ -58,11 +66,34 @@ public class SimpleArrayList<E> implements Iterable<E> {
     }
 
     public int size() {
-        return this.length;
+        return this.position;
+    }
+
+    public boolean isEmpty() {
+        return this.empty;
+    }
+
+    public void add(int index, E value) {
+        if (index >= 0 && index <= this.position) {
+            modCount++;
+            grow();
+            if (position - index >= 0) {
+                System.arraycopy(container, index, container, index + 1, position - index);
+            }
+            this.container[index] = value;
+            position++;
+            this.empty = false;
+        }
     }
 
     public void add(E value) {
         modCount++;
+        grow();
+        this.container[position++] = value;
+        this.empty = false;
+    }
+
+    private void grow() {
         if (position >= length) {
             Object[] newContainer = new Object[length * 2];
             if (length >= 0) {
@@ -71,7 +102,6 @@ public class SimpleArrayList<E> implements Iterable<E> {
                 length *= 2;
             }
         }
-        this.container[position++] = value;
     }
 
     @SuppressWarnings("unchecked")
