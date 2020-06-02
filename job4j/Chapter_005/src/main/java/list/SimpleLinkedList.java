@@ -10,6 +10,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
     private int size = 0;
     private Node<E> first;
     private Node<E> last;
+    private boolean empty = true;
 
     public void add(E data) {
         modCount++;
@@ -24,33 +25,82 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         }
         last = newNode;
         size++;
+        if (empty) {
+            empty = false;
+        }
+    }
+
+    public void clear() {
+        modCount++;
+        last = null;
+        first = null;
+        size = 0;
+        empty = true;
     }
 
     public E delete() {
-        modCount++;
-        if (size != 0) {
+        if (!empty) {
+            modCount++;
             E data = last.data;
             last = last.prev;
             size--;
+            if (size == 0) {
+                empty = true;
+            }
             return data;
         } else {
             return null;
         }
     }
 
+    public E delete(int index) {
+        E result = null;
+        if (!empty && index < size && index >= 0) {
+            modCount++;
+            if (index == 0) {
+                result = first.data;
+                first = first.next;
+            } else if (index < size - 1) {
+                Node<E> node = getNode(index);
+                result = node.data;
+                node.prev.next = node.next;
+                node.next.prev = node.prev;
+            } else if (index == size - 1) {
+                result = delete();
+            }
+            size--;
+            if (size == 0) {
+                empty = true;
+            }
+        }
+        return result;
+    }
+
     public E get(int index) {
-        if (index >= 0 && index < size) {
+        Node<E> node = getNode(index);
+        if (node != null) {
+            return node.data;
+        }
+        return null;
+    }
+
+    private Node<E> getNode(int index) {
+        if (!empty && index >= 0 && index < size) {
             Node<E> result = this.first;
             for (int i = 0; i < index; i++) {
                 result = result.next;
             }
-            return result.data;
+            return result;
         }
         return null;
     }
 
     public int size() {
         return this.size;
+    }
+
+    public boolean isEmpty() {
+        return this.empty;
     }
 
     @Override

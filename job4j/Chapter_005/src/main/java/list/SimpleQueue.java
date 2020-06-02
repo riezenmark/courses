@@ -2,16 +2,16 @@ package list;
 
 import java.util.Iterator;
 
-public class SimpleStack<T> implements Iterable<T> {
+public class SimpleQueue<T> implements Iterable<T> {
 
     private final SimpleLinkedList<T> container = new SimpleLinkedList<>();
 
-    public T pop() {
-        return container.delete();
+    public void add(T data) {
+        container.add(data);
     }
 
-    public void push(T data) {
-        container.add(data);
+    public T poll() {
+        return container.delete(0);
     }
 
     public int size() {
@@ -20,10 +20,6 @@ public class SimpleStack<T> implements Iterable<T> {
 
     public boolean isEmpty() {
         return container.isEmpty();
-    }
-
-    public T get(int index) {
-        return container.get(index);
     }
 
     @Override

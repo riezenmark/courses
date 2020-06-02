@@ -39,7 +39,9 @@ public class SimpleLinkedListTest {
         assertThat(list.size(), is(2));
         assertThat(list.delete(), is(2));
         assertThat(list.size(), is(1));
+        assertThat(list.isEmpty(), is(false));
         assertThat(list.delete(), is(1));
+        assertThat(list.isEmpty(), is(true));
         assertThat(list.size(), is(0));
         assertNull(list.delete());
     }
@@ -81,5 +83,25 @@ public class SimpleLinkedListTest {
         iterator.next();
         iterator.next();
         iterator.next();
+    }
+
+    @Test
+    public void deleteNumberTest() {
+        assertThat(list.delete(1), is(2));
+        assertThat(list.size(), is(2));
+        assertThat(list.get(0), is(1));
+        assertThat(list.get(1), is(3));
+        assertThat(list.delete(), is(3));
+        assertThat(list.size(), is(1));
+        assertThat(list.get(0), is(1));
+        list.add(2);
+        list.add(3);
+        assertThat(list.delete(0), is(1));
+        assertThat(list.size(), is(2));
+        assertThat(list.get(0), is(2));
+        assertThat(list.get(1), is(3));
+        assertNull(list.delete(8));
+        assertThat(list.delete(), is(3));
+        assertThat(list.delete(), is(2));
     }
 }
