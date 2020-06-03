@@ -38,6 +38,8 @@ public class UserTest {
         map.put(user1, 1);
         map.put(user2, 2);
 
-        assertThat(map.toString().matches("(.)map.User@[a-f0-9]{8}=1, map.User@[a-z0-9]{8}=2(.)"), is(true));
+        String hashCode = user1.toString();
+
+        assertThat(map.toString().matches("(.)" + hashCode + "=1, " + hashCode + "=2(.)"), is(true));
     }
 }
