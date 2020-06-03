@@ -40,6 +40,6 @@ public class UserTest {
 
         String hashCode = user1.toString();
 
-        assertThat(map.toString().matches("(.)" + hashCode + "=1, " + hashCode + "=2(.)"), is(true));
+        assertThat(map.toString().matches("(.)" + hashCode + "=2(.)"), is(true));
     }
 }
