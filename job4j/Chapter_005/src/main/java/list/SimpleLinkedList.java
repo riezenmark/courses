@@ -77,7 +77,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return result;
     }
 
-    boolean hasCycle() {
+    public boolean hasCycle() {
         boolean result = false;
         if (!empty) {
             Node<E> start = first;
@@ -94,6 +94,10 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             }
         }
         return result;
+    }
+
+    public E delete(E element) {
+        return delete(getIndex(element));
     }
 
     public E get(int index) {
@@ -113,6 +117,21 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             return result;
         }
         return null;
+    }
+
+    private int getIndex(E element) {
+        if (!empty) {
+            int index = 0;
+            Node<E> node = this.first;
+            while (index < size) {
+                if (node.data.equals(element)) {
+                    return index;
+                }
+                node = node.next;
+                index++;
+            }
+        }
+        return -1;
     }
 
     public int size() {

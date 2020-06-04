@@ -122,4 +122,19 @@ public class SimpleLinkedListTest {
         assertThat(list.delete(), is(3));
         assertThat(list.delete(), is(2));
     }
+
+    @Test
+    public void deleteValueTest() {
+        SimpleLinkedList<String> linkedList = new SimpleLinkedList<>();
+
+        linkedList.add("test1");
+        linkedList.add("test2");
+        linkedList.add("test3");
+
+        assertThat(linkedList.size(), is(3));
+        assertThat(linkedList.delete("test2"), is("test2"));
+        assertThat(linkedList.size(), is(2));
+        assertThat(linkedList.get(0), is("test1"));
+        assertThat(linkedList.get(1), is("test3"));
+    }
 }
