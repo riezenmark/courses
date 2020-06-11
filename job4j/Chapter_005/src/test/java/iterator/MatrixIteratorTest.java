@@ -13,6 +13,7 @@ public class MatrixIteratorTest {
     private Iterator<Integer> it;
 
     @Before
+    @SuppressWarnings("unchecked")
     public void setUp() {
         it = new MatrixIterator(new int[][]{{1}, {3, 4}, {7}});
     }
