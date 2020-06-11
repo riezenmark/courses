@@ -3,23 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>courses</artifactId>
+        <artifactId>job4j</artifactId>
         <groupId>ru.courses</groupId>
         <version>3.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
-    <version>3.0</version>
-    <modules>
-        <module>Chapter_001</module>
-        <module>Chapter_002</module>
-        <module>Chapter_003</module>
-        <module>Chapter_004</module>
-        <module>Chapter_005</module>
-        <module>Chapter_006</module>
-    </modules>
 
-    <artifactId>job4j</artifactId>
+    <artifactId>Chapter_006</artifactId>
 
 
 </project>
