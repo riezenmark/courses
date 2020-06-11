@@ -2,6 +2,8 @@ package io;
 
 import org.junit.Test;
 
+import java.io.File;
+
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -10,7 +12,7 @@ public class ConfigTest {
 
     @Test
     public void toStringTest() {
-        Config config = new Config("/home/riezenmark/Рабочий стол/Projects/Java/courses/job4j/app.properties");
+        Config config = new Config("../app.properties");
         assertThat(
                 config.toString(),
                 is("## PostgreSQL\n"
@@ -25,7 +27,7 @@ public class ConfigTest {
 
     @Test
     public void loadTest() {
-        Config config = new Config("/home/riezenmark/Рабочий стол/Projects/Java/courses/job4j/app.properties");
+        Config config = new Config("../app.properties");
 
         config.load();
 
@@ -40,7 +42,7 @@ public class ConfigTest {
 
     @Test
     public void valueTest() {
-        Config config = new Config("/home/riezenmark/Рабочий стол/Projects/Java/courses/job4j/app.properties");
+        Config config = new Config("../app.properties");
 
         assertThat(config.value("hibernate.connection.driver_class"), is("org.postgresql.Driver"));
         assertNull(config.value("## PostgreSQL"));
