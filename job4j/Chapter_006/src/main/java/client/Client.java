@@ -20,11 +20,10 @@ public class Client {
             DataOutputStream out = new DataOutputStream(socketOutputStream);
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String s = null;
             System.out.print("Input phrase for sending: ");
 
             while (true) {
-                s = reader.readLine();
+                String s = reader.readLine();
                 out.writeUTF(s);
                 out.flush();
                 s = in.readUTF();

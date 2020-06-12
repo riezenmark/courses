@@ -22,9 +22,8 @@ public class Server {
             DataInputStream in = new DataInputStream(socketInputStream);
             DataOutputStream out = new DataOutputStream(socketOutputStream);
 
-            String s = null;
             while (true) {
-                s = in.readUTF();
+                String s = in.readUTF();
                 System.out.println("Message Accepted: "  + s);
                 System.out.println("Sending Back.");
                 out.writeUTF(s);
