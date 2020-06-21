@@ -17,6 +17,7 @@
         <module>Chapter_004</module>
         <module>Chapter_005</module>
         <module>Chapter_006</module>
+        <module>Chapter_007</module>
     </modules>
 
     <artifactId>job4j</artifactId>

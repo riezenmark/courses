@@ -1,0 +1,110 @@
+sudo -u postgres psql *db*                  open database with user postgres
+
+\l                                          list databases
+
+type numeric(precision, scale)
+
+create table *name* (                       create new table
+    id serial primary key,                  with primary key
+    login character varying (2000),         and columns
+    password character varying (2000),
+    date timestamp
+);
+
+/select concat(name, ', ', price) [as *name*] from products;/
+WHERE -> (BETWEEN * and *, IN (*, *, *), NOT IN (*, *, *))
+
+\d                                          show tables
+\d tablename                                show columns
+
+insert into                                 insert new record in table
+    *table* (*column*, *column*, *column*)
+    values ('value', 'value', 'value');
+
+select * from *table*;                      show all records
+[where *column*='value';]                   [with parameters]
+
+select sum (column_name) from *table*;
+
+update *table* set *column*='value';        update columns
+[where *column*='value';]                   [with parameters]
+
+delete from *table* where *column*='value'; delete with parameter
+
+delete from *table*;                        delete all rows
+
+create table *name* (
+    id serial primary key,
+    item_id reference[s] *table*(id)        one to many [many to one]
+);
+
+/alter table items add column create_date timestamp not null default now();/
+
+Data Definition Language (DDL)
+CREATE
+DROP
+ALTER
+TRUCATE
+
+Data Manipulation Language (DML)
+SELECT
+DELETE
+UPDATE
+INSERT
+MERGE
+
+Data Control Language (DCL)
+GRANT
+REVOKE
+
+Transaction Control Language (TCL)
+COMMIT
+ROLLBACK
+SAVEPOINT
+
+CREATE TABLE IF NOT EXISTS *name*
+
+Constraints:
+NOT NULL
+UNIQUE
+/create table *name* a int, b int, c int, unique(a, c));/ a1 can be equal to a2, c1 can be equal to c2, (a1, c1) != (a2, c2)
+PRIMARY KEY (not null + unique)
+FOREIGN KEY
+/alter table orders add foreign key(product_number) references products(product_number) [on update/delete cascade];/
+CHECK (checks for terms to fulfill) ("if")
+/create table my (name varchar(100), age int check (age>0 and age<100);/
+/CREATE TABLE my_one(name varchar(100), age int, CHECK(age>0));/
+/CREATE TABLE my_one(name varchar(100), age int, weight int, CHECK((age > 0 and age < 100) and (weight > 0)));/
+DEFAULT (sets default value)
+INDEX
+
+/create table *name* (name varchar(100), age int, constraint *constraint_name* check (age>0));/
+/alter table *name* drop constraint *name*;/
+/alter table *name* alter COLUMN *name* set not null;/
+/alter table *name* alter COLUMN *name* drop not null;/
+/alter table *name* drop constraint *name*;/
+/alter table *name* add check(age>0 and age<100);/
+/alter table *name* drop constraint *name* *constraint(unique, check)*;/
+
+Joins:
+
+INNER JOIN (
+    SELECT *column_name(s)* FROM *table1* INNER JOIN *table2* ON table1.column_name = table2.column_name;
+) - if table1.column_name == table2.column_name
+LEFT JOIN (
+    SELECT *column_name(s)* FROM *table1* LEFT JOIN *table2* ON table1.column_name = table2.column_name;
+) - if table1.column_name == table2.column_name and all table1.column_name
+RIGHT JOIN - if table1.column_name == table2.column_name and all table2.column_name
+FULL JOIN
+CROSS JOIN
+NATURAL JOIN
+
+alter table *name* rename to *new_name*;
+
+alter table *name* add [column] *column_name* *type*;
+
+alter table *name* drop [column] *column_name*;
+
+alter table *name* rename [column] *column_name* to *new_column_name*;
+
+alter table *name* alter column *column_name* type *type*;
