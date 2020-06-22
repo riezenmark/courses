@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Class for a singleton request tracker.
  */
-public class Tracker {
+public class Tracker implements ITracker {
     /**
      * Doesn't allow to make new instances.
      */
@@ -30,6 +30,7 @@ public class Tracker {
 
     private final ArrayList<Item> items = new ArrayList<>();
 
+    @Override
     public void add(Item item) {
         item.setId(this.generateId());
         this.items.add(item);
@@ -50,6 +51,7 @@ public class Tracker {
      * @param item New request.
      * @return True if request was replaced and false if wasn't.
      */
+    @Override
     public boolean replace(String id, Item item) {
         int index = this.findIndexById(id);
         if (index != -1) {
@@ -65,6 +67,7 @@ public class Tracker {
      * @param id Id.
      * @return True if request was deleted anr false if wasn't.
      */
+    @Override
     public boolean delete(String id) {
         int index = this.findIndexById(id);
         if (index != -1) {
@@ -78,6 +81,7 @@ public class Tracker {
      * Gets all requests.
      * @return Copy of array of requests.
      */
+    @Override
     public ArrayList<Item> getAll() {
         return new ArrayList<>(this.items);
     }
@@ -87,6 +91,7 @@ public class Tracker {
      * @param key Name for search.
      * @return Found request or null.
      */
+    @Override
     public Item findByName(String key) {
         for (Item item : items) {
             if (item != null && item.getName().equals(key)) {
@@ -101,6 +106,7 @@ public class Tracker {
      * @param id Id for search.
      * @return Found request or null.
      */
+    @Override
     public Item findById(String id) {
         for (Item item : items) {
             if (item != null && item.getId().equals(id)) {

@@ -13,13 +13,13 @@ public class StartUI {
     /**
      * Tracker.
      */
-    private final Tracker tracker;
+    private final ITracker tracker;
     /**
      * 0 buffer.
      */
     private final Consumer<String> outputBuffer;
 
-    public StartUI(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+    public StartUI(Input input, ITracker tracker, Consumer<String> outputBuffer) {
         this.input = input;
         this.tracker = tracker;
         this.outputBuffer = outputBuffer;
@@ -55,7 +55,7 @@ public class StartUI {
      * @param args args.
      */
     public static void main(String[] args) {
-        Tracker tracker = Tracker.getInstance();
+        ITracker tracker = Tracker.getInstance();
         new StartUI(new ValidateInput(new ConsoleInput(System.out::print), System.out::print),
                 tracker, System.out::print).init();
     }

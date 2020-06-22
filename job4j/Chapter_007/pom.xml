@@ -11,5 +11,12 @@
 
     <artifactId>Chapter_007</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>ru.courses</groupId>
+            <artifactId>Chapter_002</artifactId>
+            <version>3.0</version>
+        </dependency>
+    </dependencies>
 
 </project>

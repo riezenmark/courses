@@ -14,7 +14,7 @@ public class MenuTracker {
     /**
      * Tracker.
      */
-    private final Tracker tracker;
+    private final ITracker tracker;
     /**
      * Output buffer.
      */
@@ -29,7 +29,7 @@ public class MenuTracker {
      * @param input Input (user/test/another).
      * @param tracker Tracker.
      */
-    public MenuTracker(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+    public MenuTracker(Input input, ITracker tracker, Consumer<String> outputBuffer) {
         this.input = input;
         this.tracker = tracker;
         this.outputBuffer = outputBuffer;
@@ -107,7 +107,7 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+        public boolean execute(Input input, ITracker tracker, Consumer<String> outputBuffer) {
             outputBuffer.accept("==== Create a new Item ====\n");
             String name = input.ask("Enter name of new Item: ");
             Item item = new Item(name);
@@ -138,7 +138,7 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+        public boolean execute(Input input, ITracker tracker, Consumer<String> outputBuffer) {
             outputBuffer.accept("==== Show all Items ====\n");
             ArrayList<Item> items = tracker.getAll();
             int index = 1;
@@ -171,7 +171,7 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+        public boolean execute(Input input, ITracker tracker, Consumer<String> outputBuffer) {
             outputBuffer.accept("==== Edit Item ====\n");
             String id = input.ask("Enter id of Item You want to edit: ");
             String name = input.ask("Enter name of new Item: ");
@@ -206,7 +206,7 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+        public boolean execute(Input input, ITracker tracker, Consumer<String> outputBuffer) {
             outputBuffer.accept("==== Delete Item ====\n");
             String id = input.ask("Enter id of Item You want to delete: ");
             if (tracker.delete(id)) {
@@ -240,7 +240,7 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+        public boolean execute(Input input, ITracker tracker, Consumer<String> outputBuffer) {
             outputBuffer.accept("==== Find Item by Id ====\n");
             String id = input.ask("Enter id: ");
             Item item = tracker.findById(id);
@@ -275,7 +275,7 @@ public class MenuTracker {
          * @return True if operation was successful and false if wasn't.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+        public boolean execute(Input input, ITracker tracker, Consumer<String> outputBuffer) {
             outputBuffer.accept("==== Find Item by Name ====\n");
             String name = input.ask("Enter name: ");
             Item item = tracker.findByName(name);
@@ -309,7 +309,7 @@ public class MenuTracker {
          * @return false.
          */
         @Override
-        public boolean execute(Input input, Tracker tracker, Consumer<String> outputBuffer) {
+        public boolean execute(Input input, ITracker tracker, Consumer<String> outputBuffer) {
             outputBuffer.accept("==== Exit ====\n");
             return false;
         }
