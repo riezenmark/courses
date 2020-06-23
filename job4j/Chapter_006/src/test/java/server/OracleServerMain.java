@@ -12,7 +12,7 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class OracleServerTest {
+public class OracleServerMain {
     private static final String LN = System.getProperty("line.separator");
 
     @Test

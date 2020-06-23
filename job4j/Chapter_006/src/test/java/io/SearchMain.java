@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class SearchTest {
+public class SearchMain {
     String path;
     List<String> extensions;
     List<File> result;

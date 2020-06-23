@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class ConfigTest {
+public class ConfigMain {
 
     @Test
     public void toStringTest() {
