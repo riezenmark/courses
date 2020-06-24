@@ -4,7 +4,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -12,10 +17,30 @@ import static org.junit.Assert.*;
 public class TrackerSQLTest {
     TrackerSQL tracker;
 
+    public Connection init() {
+        try (
+                InputStream in = TrackerSQL.class
+                        .getClassLoader()
+                        .getResourceAsStream(
+                                "app.properties"
+                        )
+        ) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            return DriverManager.getConnection(
+                    config.getProperty("url"),
+                    config.getProperty("username"),
+                    config.getProperty("password")
+            );
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     @Before
-    public void connect() {
-       tracker = new TrackerSQL();
-       tracker.init();
+    public void connect() throws SQLException {
+       tracker = new TrackerSQL(ConnectionRollback.create(this.init()));
 
         Item item1 = new Item("test1");
         Item item2 = new Item("test2");

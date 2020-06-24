@@ -89,6 +89,27 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>test</id>
+            <properties>
+                <db.url>jdbc:postgresql://localhost:5432/tracker</db.url>
+                <db.username>postgres</db.username>
+                <db.password>2212</db.password>
+                <db.driver>org.postgresql.Driver</db.driver>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <db.url>jdbc:postgresql://localhost:5432/tracker</db.url>
+                <db.username>postgres</db.username>
+                <db.password>2212</db.password>
+                <db.driver>org.postgresql.Driver</db.driver>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>

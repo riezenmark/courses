@@ -9,7 +9,7 @@ import java.util.StringJoiner;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class AnalyzeMain {
+public class AnalyzeTest {
     @Test
     public void test() {
         Analyze analyze = new Analyze();

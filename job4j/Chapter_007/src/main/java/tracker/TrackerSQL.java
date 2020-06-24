@@ -2,16 +2,19 @@ package tracker;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.io.InputStream;
-import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class TrackerSQL implements ITracker, AutoCloseable {
 
-    private Connection connection;
+    private final Connection connection;
     private static final Logger LOG = LogManager.getLogger(TrackerSQL.class.getName());
 
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
+    }
+
+    /*
     public boolean init() {
         try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
@@ -27,11 +30,12 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         }
         return this.connection != null;
     }
+     */
 
     @Override
     public void add(Item item) {
         try (
-                PreparedStatement statement = connection.prepareStatement(
+                PreparedStatement statement = this.connection.prepareStatement(
                         "INSERT INTO item (id, name) VALUES (?, ?)"
                 )
         ) {
