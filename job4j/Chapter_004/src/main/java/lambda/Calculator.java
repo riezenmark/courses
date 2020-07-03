@@ -61,7 +61,7 @@ public class Calculator {
         calc.calculate(
                 0, 10, 2,
                 MathUtil::add,
-                result -> System.out.println(result)
+                System.out::println
         );
     }
 
