@@ -6,15 +6,19 @@ public class InteractCalc {
     private double lastResult = 0;
     private String lastOperation = null;
     private final Scanner scanner = new Scanner(System.in);
-    private final Calculator calculator = new Calculator();
+    private final Calculator calculator;
+
+    public InteractCalc(Calculator calculator) {
+        this.calculator = calculator;
+    }
 
     private double askNumber() {
         String s;
         do {
             System.out.print("Input number: ");
             s = scanner.nextLine();
-        } while (!s.matches("(\\d*)|(^\\s*$)"));
-        return s.matches("(\\d+)") ? Double.parseDouble(s) : lastResult;
+        } while (!s.matches("(-*\\d+[.]*\\d*)|(^\\s*$)"));
+        return s.matches("(-*\\d+[.]*\\d*)") ? Double.parseDouble(s) : lastResult;
     }
 
     private String askOperation() {
@@ -22,50 +26,36 @@ public class InteractCalc {
         do {
             System.out.print("Input operation: ");
             s = scanner.nextLine();
-        } while (!s.matches("^[*+/-]$|(^\\s*$)|^Exit$") && lastOperation != null);
-        return s.matches("^[*+/-]$|^Exit$") ? s : lastOperation;
+        } while (!s.matches(calculator.getOperationRegex() + "|(^\\s*$)|^Exit$") && lastOperation != null);
+        return s.matches(calculator.getOperationRegex() + "|^Exit$") ? s : lastOperation;
+    }
+
+    public boolean operate() {
+        double left = askNumber();
+        String op;
+        do {
+            op = askOperation();
+        } while (op == null);
+        lastOperation = op;
+        double right = askNumber();
+        if (!op.equals("Exit")) {
+            lastResult = calculator.operations.get(op).execute(left, right);
+            printResult(left, right, lastOperation, lastResult);
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void start() {
-        String op;
-        double left;
-        double right;
+        boolean exit;
         do {
-            left = askNumber();
-            do {
-                op = askOperation();
-            } while (op == null);
-            lastOperation = op;
-            right = askNumber();
-            switch (op) {
-                case "+":
-                    lastResult = calculator.add(left, right);
-                    break;
-                case "-":
-                    lastResult = calculator.subtract(left, right);
-                    break;
-                case "/":
-                    lastResult = calculator.divide(left, right);
-                    break;
-                case "*":
-                    lastResult = calculator.multiply(left, right);
-                    break;
-            }
-            if (!op.equals("Exit")) {
-                printResult(left, right, lastOperation, lastResult);
-            } else {
-                break;
-            }
-        } while (true);
+            exit = operate();
+        } while (!exit);
     }
 
     public void printResult(double left, double right, String operation, double result) {
         System.out.println(left + " " + operation + " " + right + " = " + result);
-    }
-
-    public static void main(String[] args) {
-        InteractCalc calc = new InteractCalc();
-        calc.start();
     }
 }
 
