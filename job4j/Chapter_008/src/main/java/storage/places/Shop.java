@@ -15,6 +15,10 @@ public class Shop {
         storage.add(food);
     }
 
+    public void clear() {
+        this.storage.clear();
+    }
+
     public ArrayList<Food> getStorage() {
         return storage;
     }

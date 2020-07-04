@@ -1,6 +1,7 @@
 package storage;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -16,6 +17,7 @@ import storage.products.Milk;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+@Ignore
 public class StorageTest {
     private Context context;
     private Warehouse warehouse;
@@ -99,5 +101,32 @@ public class StorageTest {
         );
         assertThat(shop.getStorage().get(0).getName(), is("Meat"));
         assertEquals(shop.getStorage().get(0).getDiscount(), 25, 0.01);
+    }
+
+    @Test
+    public void resortTest() {
+        Food meat = new Meat(
+                new GregorianCalendar(
+                        2020, Calendar.FEBRUARY, 2
+                ).getTime(),
+                new GregorianCalendar(
+                        2020, Calendar.JULY, 6
+                ).getTime(),
+                3.36
+        );
+
+        context.execute(meat);
+        assertThat(shop.getStorage().get(0).getName(), is("Meat"));
+        assertEquals(shop.getStorage().get(0).getDiscount(), 25, 0.01);
+
+        meat.setExpirationDate(
+                new GregorianCalendar(
+                        2020, Calendar.JULY, 3
+                ).getTime()
+        );
+
+        context.resort();
+        assertThat(shop.getStorage().isEmpty(), is(true));
+        assertThat(trash.getStorage().get(0).getName(), is("Meat"));
     }
 }

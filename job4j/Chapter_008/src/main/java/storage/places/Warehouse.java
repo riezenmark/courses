@@ -11,6 +11,10 @@ public class Warehouse {
         this.name = name;
     }
 
+    public void clear() {
+        this.storage.clear();
+    }
+
     public void put(Food food) {
         storage.add(food);
     }

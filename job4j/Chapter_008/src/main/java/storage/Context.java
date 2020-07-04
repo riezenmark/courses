@@ -21,4 +21,7 @@ public class Context {
         this.control.control(food, warehouse, shop, trash);
     }
 
+    public void resort() {
+        this.control.resort(warehouse, shop, trash);
+    }
 }

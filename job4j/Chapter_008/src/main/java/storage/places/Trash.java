@@ -10,6 +10,10 @@ public class Trash {
         storage.add(food);
     }
 
+    public void clear() {
+        this.storage.clear();
+    }
+
     public ArrayList<Food> getStorage() {
         return storage;
     }

@@ -6,4 +6,6 @@ import storage.places.Warehouse;
 
 public interface Control {
     void control(Food food, Warehouse warehouse, Shop shop, Trash trash);
+
+    void resort(Warehouse warehouse, Shop shop, Trash trash);
 }

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Food {
     private final String name;
-    private final Date expirationDate;
+    private Date expirationDate;
     private final Date productionDate;
     private final double price;
     private double discount;
@@ -38,5 +38,9 @@ public class Food {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
     }
 }

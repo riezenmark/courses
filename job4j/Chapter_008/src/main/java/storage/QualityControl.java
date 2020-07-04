@@ -4,6 +4,8 @@ import storage.places.Shop;
 import storage.places.Trash;
 import storage.places.Warehouse;
 
+import java.util.ArrayList;
+
 public class QualityControl implements Control {
 
     @Override
@@ -20,6 +22,20 @@ public class QualityControl implements Control {
             shop.put(food);
         } else {
             trash.put(food);
+        }
+    }
+
+    @Override
+    public void resort(Warehouse warehouse, Shop shop, Trash trash) {
+        ArrayList<Food> list = new ArrayList<>();
+        list.addAll(warehouse.getStorage());
+        list.addAll(shop.getStorage());
+        list.addAll(trash.getStorage());
+        warehouse.clear();
+        shop.clear();
+        trash.clear();
+        for (Food food : list) {
+            control(food, warehouse, shop, trash);
         }
     }
 }
