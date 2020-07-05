@@ -21,10 +21,20 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        FileCache<String, File> fileCache = new FileCache<>();
+        AbstractCache<String, File> fileCache = new FileCache<>();
 
         print(fileCache.getFromCache("job4j/Chapter_009/src/main/resources/Names.txt").get());
         System.out.println();
         print(fileCache.getFromCache("job4j/Chapter_009/src/main/resources/Addresses.txt").get());
+    }
+
+    @SuppressWarnings("unchecked")
+    private static class FileCache<K, T> extends AbstractCache<K, T> {
+        public FileCache() {
+            super(
+                    k -> (T) new File((String) k),
+                    (k, t) -> k.equals(((File) t).getName())
+            );
+        }
     }
 }
