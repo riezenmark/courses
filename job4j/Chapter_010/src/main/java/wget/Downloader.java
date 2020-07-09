@@ -8,10 +8,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Downloader {
-    private static final int BUFFER_SIZE = 4096;
+    private static final int BUFFER_SIZE;
     private HttpURLConnection connection;
-    private static double receivedBytes = 0.0;
+    private double receivedBytes = 0.0;
     private final int speedLimit;
+
+    static {
+        BUFFER_SIZE = 409;
+    }
 
     public Downloader(int speedLimit) {
         this.speedLimit = speedLimit;
@@ -22,6 +26,7 @@ public class Downloader {
             String filename = getFileName(link);
             printFileInfo(filename);
             download(connection.getInputStream(), new FileOutputStream(filename));
+            System.out.println();
             System.out.println("File Downloaded");
         } else {
             System.out.println("No File to Download.");
@@ -65,7 +70,8 @@ public class Downloader {
         thread.start();
         while ((bytesRead = inputStream.read(buffer)) != -1) {
             if (!speedChecker.isOverLimit()) {
-                receivedBytes += bytesRead;
+                this.receivedBytes += bytesRead;
+                speedChecker.receivedBytes = this.receivedBytes;
                 outputStream.write(buffer, 0, bytesRead);
             }
         }
@@ -78,6 +84,7 @@ public class Downloader {
     private static class SpeedChecker implements Runnable {
         private boolean speedIsOverLimit = false;
         private final int speedLimit;
+        private double receivedBytes;
 
         public SpeedChecker(int speedLimit) {
             this.speedLimit = speedLimit;
@@ -100,10 +107,12 @@ public class Downloader {
         }
 
         private void printSpeed(double bytesReadInASecond) {
+            System.out.print('\r');
             System.out.print(
-                    "\r>> Speed: "
-                    + Double.valueOf(bytesReadInASecond / 1024).intValue()
-                    + " Kb/sec"
+                    String.format(
+                            ">> Speed:\t%d\tKb/sec",
+                            Double.valueOf(bytesReadInASecond / 1024).intValue()
+                    )
             );
         }
 
