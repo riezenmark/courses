@@ -64,31 +64,34 @@ public class SimpleArrayListTest {
         assertThat(list.get(3), is(7));
 
         list.add(184, 8);
-        assertThat(list.size(), is(4));
-        assertThat(list.get(0), is(3));
-        assertThat(list.get(1), is(4));
-        assertThat(list.get(2), is(5));
-        assertThat(list.get(3), is(7));
-
-        list.add(3, 8);
         assertThat(list.size(), is(5));
         assertThat(list.get(0), is(3));
         assertThat(list.get(1), is(4));
         assertThat(list.get(2), is(5));
-        assertThat(list.get(3), is(8));
-        assertThat(list.get(4), is(7));
+        assertThat(list.get(3), is(7));
+        assertThat(list.get(4), is(8));
 
-        list.add(5, 9);
+        list.add(3, 8);
         assertThat(list.size(), is(6));
         assertThat(list.get(0), is(3));
         assertThat(list.get(1), is(4));
         assertThat(list.get(2), is(5));
         assertThat(list.get(3), is(8));
         assertThat(list.get(4), is(7));
+        assertThat(list.get(5), is(8));
+
+        list.add(5, 9);
+        assertThat(list.size(), is(7));
+        assertThat(list.get(0), is(3));
+        assertThat(list.get(1), is(4));
+        assertThat(list.get(2), is(5));
+        assertThat(list.get(3), is(8));
+        assertThat(list.get(4), is(7));
         assertThat(list.get(5), is(9));
+        assertThat(list.get(6), is(8));
 
         list.add(0, 9);
-        assertThat(list.size(), is(7));
+        assertThat(list.size(), is(8));
         assertThat(list.get(0), is(9));
         assertThat(list.get(1), is(3));
         assertThat(list.get(2), is(4));
@@ -96,6 +99,7 @@ public class SimpleArrayListTest {
         assertThat(list.get(4), is(8));
         assertThat(list.get(5), is(7));
         assertThat(list.get(6), is(9));
+        assertThat(list.get(7), is(8));
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)

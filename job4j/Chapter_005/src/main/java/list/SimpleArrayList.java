@@ -74,7 +74,10 @@ public class SimpleArrayList<E> implements Iterable<E> {
     }
 
     public void add(int index, E value) {
-        if (index >= 0 && index <= this.position) {
+        if (index >= 0) {
+            if (index > this.position) {
+                index = this.position;
+            }
             modCount++;
             grow();
             if (position - index >= 0) {

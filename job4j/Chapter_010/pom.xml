@@ -11,6 +11,14 @@
 
     <artifactId>Chapter_010</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>ru.courses</groupId>
+            <artifactId>Chapter_005</artifactId>
+            <version>3.0</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
