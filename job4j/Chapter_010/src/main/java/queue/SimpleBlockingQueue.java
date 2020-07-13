@@ -10,9 +10,18 @@ import java.util.Queue;
 public class SimpleBlockingQueue<T> {
     @GuardedBy("this")
     private final Queue<T> queue = new LinkedList<>();
+    private final int size;
 
-    public void offer(T value) {
+    public SimpleBlockingQueue(int size) {
+        this.size = size;
+    }
+
+    public void offer(T value) throws InterruptedException {
         synchronized (this) {
+            while (queue.size() >= size) {
+                System.out.println("Queue size is " + size + ", and it already has " + size + " elements.");
+                wait();
+            }
             queue.offer(value);
             if (queue.size() == 1) {
                 notify();
