@@ -12,13 +12,7 @@ public class SimpleBlockingQueueTest {
     public void whenProducerAddsOneElementAndConsumerGetsElementAfterItThenElementIsGot()
             throws InterruptedException {
         Thread producer = new Thread(
-                () -> {
-                    try {
-                        queue.offer(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                () -> queue.offer(1)
         );
         final Integer[] result = {null};
         Thread consumer = new Thread(
@@ -77,13 +71,9 @@ public class SimpleBlockingQueueTest {
             throws InterruptedException {
         Thread producer = new Thread(
                 () -> {
-                    try {
-                        for (int i = 1; i <= 6; i++) {
-                            queue.offer(i);
-                            System.out.println(i + " added.");
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    for (int i = 1; i <= 6; i++) {
+                        queue.offer(i);
+                        System.out.println(i + " added.");
                     }
                 }
         );

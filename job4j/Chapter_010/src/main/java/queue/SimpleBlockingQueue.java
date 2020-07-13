@@ -16,11 +16,15 @@ public class SimpleBlockingQueue<T> {
         this.size = size;
     }
 
-    public void offer(T value) throws InterruptedException {
+    public void offer(T value) {
         synchronized (this) {
             while (queue.size() >= size) {
-                System.out.println("Queue size is " + size + ", and it already has " + size + " elements.");
-                wait();
+                try {
+                    System.out.println("Queue size is " + size + ", and it already has " + size + " elements.");
+                    wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
             queue.offer(value);
             if (queue.size() == 1) {
@@ -41,4 +45,33 @@ public class SimpleBlockingQueue<T> {
         }
     }
 
+    public static void main(String[] args) {
+        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(5);
+        final Thread consumer = new Thread(
+                () -> {
+                    while (!Thread.currentThread().isInterrupted()) {
+                        try {
+                            System.out.println(queue.poll());
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                }
+        );
+        consumer.start();
+        new Thread(
+                () -> {
+                    for (int index = 0; index != 3; index++) {
+                        queue.offer(index);
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    consumer.interrupt();
+                }
+
+        ).start();
+    }
 }
