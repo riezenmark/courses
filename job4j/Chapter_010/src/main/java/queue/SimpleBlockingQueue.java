@@ -27,9 +27,7 @@ public class SimpleBlockingQueue<T> {
                 }
             }
             queue.offer(value);
-            if (queue.size() == 1) {
-                notify();
-            }
+            notify();
         }
     }
 
@@ -73,5 +71,11 @@ public class SimpleBlockingQueue<T> {
                 }
 
         ).start();
+    }
+
+    public boolean isEmpty() {
+        synchronized (this) {
+            return queue.isEmpty();
+        }
     }
 }
