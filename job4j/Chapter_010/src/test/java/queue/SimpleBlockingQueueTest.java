@@ -77,7 +77,6 @@ public class SimpleBlockingQueueTest {
                 () -> {
                     for (int i = 1; i <= 6; i++) {
                         queue.offer(i);
-                        System.out.println(i + " added.");
                     }
                 }
         );
@@ -119,7 +118,6 @@ public class SimpleBlockingQueueTest {
                         Thread.sleep(1500);
                         for (int i = 1; i <= 7; i++) {
                             queue.offer(i);
-                            System.out.println(i + " added.");
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();

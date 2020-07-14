@@ -20,7 +20,6 @@ public class SimpleBlockingQueue<T> {
         synchronized (this) {
             while (queue.size() >= size) {
                 try {
-                    System.out.println("Queue size is " + size + ", and it already has " + size + " elements.");
                     wait();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -34,7 +33,6 @@ public class SimpleBlockingQueue<T> {
     public T poll() throws InterruptedException {
         synchronized (this) {
             while (queue.isEmpty()) {
-                System.out.println("Queue is empty. Waiting for new data...");
                 wait();
             }
             T t = queue.poll();
