@@ -44,13 +44,13 @@ public enum MemoryStore implements Store {
     }
 
     private void update(User from, User to) {
-        if (from.getName() != null) {
+        if (from.getName() != null && !from.getName().equals("")) {
             to.setName(from.getName());
         }
-        if (from.getLogin() != null) {
+        if (from.getLogin() != null && !from.getLogin().equals("")) {
             to.setLogin(from.getLogin());
         }
-        if (from.getEmail() != null) {
+        if (from.getEmail() != null && !from.getEmail().equals("")) {
             to.setEmail(from.getEmail());
         }
     }

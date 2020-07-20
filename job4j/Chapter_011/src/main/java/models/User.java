@@ -16,6 +16,11 @@ public class User {
         createDate = new Date();
     }
 
+    public User(int id) {
+        this.id = id;
+        createDate = new Date();
+    }
+
     public int getId() {
         return id;
     }
