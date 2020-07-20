@@ -1,11 +1,13 @@
 <web-app>
     <servlet>
-        <servlet-name>EchoServlet</servlet-name>
-        <servlet-class>servlets.EchoServlet</servlet-class>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>servlets.UserServlet</servlet-class>
+        <description>This servlet is an example servlet</description>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>EchoServlet</servlet-name>
-        <url-pattern>/echo</url-pattern>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/start</url-pattern>
     </servlet-mapping>
 </web-app>
