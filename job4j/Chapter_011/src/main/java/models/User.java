@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class User {
@@ -49,8 +50,8 @@ public class User {
         this.email = email;
     }
 
-    public Calendar getCreateDate() {
-        return createDate;
+    public Date getCreateDate() {
+        return createDate.getTime();
     }
 
     @Override

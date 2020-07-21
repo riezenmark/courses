@@ -1,7 +1,6 @@
-<%--suppress HtmlUnknownTarget --%>
-<%@ page import="models.User" %>
-<%@ page import="logic.ValidateService" %>
+<%--suppress HtmlUnknownTarget, ELValidationInJSP --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
     <title>Users</title>
@@ -34,28 +33,28 @@
         <th>Created</th>
         <th>Actions</th>
     </tr>
-    <%for (User user : ValidateService.INSTANCE.getAll()) {%>
+    <c:forEach items="${users}" var="user">
     <tr>
-        <td><%=user.getId()%></td>
-        <td><%=user.getName()%></td>
-        <td><%=user.getLogin()%></td>
-        <td><%=user.getEmail()%></td>
-        <td><%=user.getCreateDate().getTime().toString()%></td>
+        <td><c:out value="${user.id}"/></td>
+        <td><c:out value="${user.name}"/></td>
+        <td><c:out value="${user.login}"/></td>
+        <td><c:out value="${user.email}"/></td>
+        <td><c:out value="${user.createDate}"/></td>
         <td>
-            <form action="<%=request.getContextPath()%>/edit" method="get">
-                <input type="hidden" name="id" value="<%=user.getId()%>"/>
+            <form action="${pageContext.servletContext.contextPath}/edit" method="get">
+                <input type="hidden" name="id" value="${user.id}"/>
                 <input type="submit" value="Update"/>
             </form>
-            <form action="<%=request.getContextPath()%>/list" method="post">
-                <input type="hidden" name="id" value="<%=user.getId()%>"/>
+            <form action="${pageContext.servletContext.contextPath}/list" method="post">
+                <input type="hidden" name="id" value="${user.id}"/>
                 <input type="submit" value="Delete"/>
             </form>
         </td>
     </tr>
-    <%}%>
+    </c:forEach>
     </tbody>
 </table>
-<form action="<%=request.getContextPath()%>/create" method="get">
+<form action="${pageContext.servletContext.contextPath}/create" method="get">
     <input type="submit" value="Create">
 </form>
 </body>

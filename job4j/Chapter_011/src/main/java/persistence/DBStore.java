@@ -72,7 +72,7 @@ public class DBStore implements Store<User> {
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getEmail());
-            statement.setDate(4, new Date(user.getCreateDate().getTime().getTime()));
+            statement.setDate(4, new Date(user.getCreateDate().getTime()));
             statement.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
