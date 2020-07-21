@@ -1,28 +1,28 @@
 package models;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Objects;
 
 public class User {
     private final int id;
     private String name, login, email;
-    private final Date createDate;
+    private final Calendar createDate;
 
-    public User(int id, String name, String login, String email) {
+    public User(int id, String name, String login, String email, Calendar createDate) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
-        createDate = new Date();
+        this.createDate = createDate;
     }
 
     public User(int id) {
         this.id = id;
-        createDate = new Date();
+        createDate = Calendar.getInstance();
     }
 
-    public int getId() {
-        return id;
+    public String getId() {
+        return String.valueOf(id);
     }
 
     public String getName() {
@@ -49,7 +49,7 @@ public class User {
         this.email = email;
     }
 
-    public Date getCreateDate() {
+    public Calendar getCreateDate() {
         return createDate;
     }
 

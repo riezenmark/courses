@@ -36,18 +36,18 @@
     </tr>
     <%for (User user : ValidateService.INSTANCE.getAll()) {%>
     <tr>
-        <td><%=String.valueOf(user.getId())%></td>
+        <td><%=user.getId()%></td>
         <td><%=user.getName()%></td>
         <td><%=user.getLogin()%></td>
         <td><%=user.getEmail()%></td>
-        <td><%=user.getCreateDate().toString()%></td>
+        <td><%=user.getCreateDate().getTime().toString()%></td>
         <td>
             <form action="<%=request.getContextPath()%>/edit" method="get">
-                <input type="hidden" name="id" value="<%=String.valueOf(user.getId())%>"/>
+                <input type="hidden" name="id" value="<%=user.getId()%>"/>
                 <input type="submit" value="Update"/>
             </form>
             <form action="<%=request.getContextPath()%>/list" method="post">
-                <input type="hidden" name="id" value="<%=String.valueOf(user.getId())%>"/>
+                <input type="hidden" name="id" value="<%=user.getId()%>"/>
                 <input type="submit" value="Delete"/>
             </form>
         </td>

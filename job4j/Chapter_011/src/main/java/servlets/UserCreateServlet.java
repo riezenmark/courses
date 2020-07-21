@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class UserCreateServlet extends HttpServlet {
     private final ValidateService logic = ValidateService.INSTANCE;
@@ -25,7 +26,8 @@ public class UserCreateServlet extends HttpServlet {
                         Integer.parseInt(req.getParameter("id")),
                         req.getParameter("name"),
                         req.getParameter("login"),
-                        req.getParameter("email")
+                        req.getParameter("email"),
+                        Calendar.getInstance()
                 )
         );
         resp.setContentType("text/html");

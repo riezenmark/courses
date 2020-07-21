@@ -1,17 +1,15 @@
 package persistence;
 
-import models.User;
-
 import java.util.List;
 
-public interface Store {
-    void add(User user);
+public interface Store<T> {
+    T add(T model);
 
-    void update(User user);
+    void update(T model);
 
-    void delete(User user);
+    String delete(String id);
 
-    List<User> getAll();
+    List<T> getAll();
 
-    User findById(int id);
+    T findById(String id);
 }

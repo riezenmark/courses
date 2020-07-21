@@ -1,16 +1,16 @@
 package logic;
 
 import models.User;
-import persistence.MemoryStore;
+import persistence.DBStore;
 import persistence.Store;
 
 import java.util.List;
 
 public enum ValidateService {
     INSTANCE;
-    private volatile int count = 0;
+    private volatile int count = 1;
 
-    private final Store persistence = MemoryStore.INSTANCE;
+    private final Store<User> persistence = DBStore.getInstance();
 
     public void add(User user) {
         if (persistence.findById(user.getId()) == null) {
@@ -29,7 +29,7 @@ public enum ValidateService {
 
     public void delete(User user) {
         if (persistence.findById(user.getId()) != null) {
-            persistence.delete(user);
+            persistence.delete(user.getId());
         }
     }
 
@@ -42,6 +42,6 @@ public enum ValidateService {
     }
 
     public User findById(int id) {
-        return persistence.findById(id);
+        return persistence.findById(String.valueOf(id));
     }
 }
