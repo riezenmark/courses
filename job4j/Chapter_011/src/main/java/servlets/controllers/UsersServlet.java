@@ -1,4 +1,4 @@
-package servlets;
+package servlets.controllers;
 
 import logic.ValidateService;
 import models.User;
@@ -7,10 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class UsersServlet extends HttpServlet {
-    private final ValidateService logic = ValidateService.INSTANCE;
+    private final ValidateService logic = ValidateService.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

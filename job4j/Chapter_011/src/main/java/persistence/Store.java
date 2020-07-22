@@ -3,11 +3,13 @@ package persistence;
 import java.util.List;
 
 public interface Store<T> {
-    T add(T model);
+    int size();
+
+    void add(T model);
 
     void update(T model);
 
-    String delete(String id);
+    void delete(String id);
 
     List<T> getAll();
 

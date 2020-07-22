@@ -1,15 +1,18 @@
 package persistence;
 
+import models.Role;
 import models.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.sql.Date;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Properties;
 
-public class DBStore implements Store<User> {
+public class DBStore implements UserStore<User> {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final DBStore INSTANCE = new DBStore();
     private final Properties config;
@@ -24,7 +27,6 @@ public class DBStore implements Store<User> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public DBStore() {
@@ -36,48 +38,78 @@ public class DBStore implements Store<User> {
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
-        this.createTable();
+        this.initTables();
     }
 
     public static DBStore getInstance() {
         return INSTANCE;
     }
 
-    private void createTable() {
+    private void initTables() {
         try (
                 Connection connection = SOURCE.getConnection();
                 Statement statement = connection.createStatement()
         ) {
-            statement.execute("DROP TABLE users");
+            statement.execute("DROP TABLE IF EXISTS \"user\"");
             statement.execute(
-                    "CREATE TABLE users (id SERIAL PRIMARY KEY,"
+                    "CREATE TABLE IF NOT EXISTS role (id SERIAL PRIMARY KEY,"
+                            + "name CHARACTER VARYING (50),"
+                            + "UNIQUE (name))"
+            );
+            statement.execute(
+                    "CREATE TABLE IF NOT EXISTS \"user\" (id SERIAL PRIMARY KEY,"
                             + "name CHARACTER VARYING (100),"
                             + "login CHARACTER VARYING (100),"
                             + "email CHARACTER VARYING (200),"
-                            + "created DATE)"
+                            + "password CHARACTER VARYING (100),"
+                            + "role_id INT REFERENCES role(id),"
+                            + "created DATE,"
+                            + "UNIQUE (login),"
+                            + "UNIQUE (email))"
             );
+            statement.executeUpdate("INSERT INTO role(name) VALUES ('admin')");
+            statement.executeUpdate("INSERT INTO role(name) VALUES ('guest')");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }
 
     @Override
-    public User add(User user) {
+    public int size() {
+        int count = 0;
+        try (
+                Connection connection = SOURCE.getConnection();
+                Statement statement = connection.createStatement()
+        ) {
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(id) FROM \"user\"");
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public void add(User user) {
         try (
                 Connection connection = SOURCE.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
-                        "INSERT INTO users(name, login, email, created) VALUES (?, ?, ?, ?)"
+                        "INSERT INTO \"user\"(name, login, email, created, password, role_id)"
+                                + " VALUES (?, ?, ?, ?, ?, ?)"
                 )
         ) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getEmail());
             statement.setDate(4, new Date(user.getCreateDate().getTime()));
+            statement.setString(5, user.getPassword());
+            statement.setInt(6, user.getRole().getId());
             statement.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return user;
     }
 
     @Override
@@ -85,13 +117,14 @@ public class DBStore implements Store<User> {
         try (
                 Connection connection = SOURCE.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
-                        "UPDATE users SET name=?, login=?, email=? WHERE id=?"
+                        "UPDATE \"user\" SET name=?, login=?, email=?, role_id=? WHERE id=?"
                 )
         ) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getEmail());
-            statement.setInt(4, Integer.parseInt(user.getId()));
+            statement.setInt(4, user.getRole().getId());
+            statement.setInt(5, Integer.parseInt(user.getId()));
             statement.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -99,20 +132,18 @@ public class DBStore implements Store<User> {
     }
 
     @Override
-    public String delete(String id) {
+    public void delete(String id) {
         try (
                 Connection connection = SOURCE.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
-                        "DELETE FROM users WHERE id=?"
+                        "DELETE FROM \"user\" WHERE id=?"
                 )
         ) {
             statement.setInt(1, Integer.parseInt(id));
             statement.executeUpdate();
-            return "DELETED";
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return "NOT DELETED";
     }
 
     @Override
@@ -122,7 +153,7 @@ public class DBStore implements Store<User> {
                 Connection connection = SOURCE.getConnection();
                 Statement statement = connection.createStatement()
         ) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM \"user\"");
             while (resultSet.next()) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(resultSet.getDate("created").getTime());
@@ -131,6 +162,8 @@ public class DBStore implements Store<User> {
                         resultSet.getString("name"),
                         resultSet.getString("login"),
                         resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getInt("role_id"),
                         calendar
                 );
                 list.add(user);
@@ -148,7 +181,7 @@ public class DBStore implements Store<User> {
         try (
                 Connection connection = SOURCE.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
-                        "SELECT * FROM users WHERE id=?"
+                        "SELECT * FROM \"user\" WHERE id=?"
                 )
         ) {
             statement.setInt(1, Integer.parseInt(id));
@@ -161,6 +194,8 @@ public class DBStore implements Store<User> {
                         resultSet.getString("name"),
                         resultSet.getString("login"),
                         resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getInt("role_id"),
                         calendar
                 );
             }
@@ -168,5 +203,68 @@ public class DBStore implements Store<User> {
             exception.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public boolean isCredential(String login, String password) {
+        boolean isCredential = false;
+        try (
+                Connection connection = SOURCE.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT * FROM \"user\" WHERE login=? AND password=?"
+                )
+        ) {
+            statement.setString(1, login);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                isCredential = true;
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return isCredential;
+    }
+
+    @Override
+    public int getRoleID(String login, String password) {
+        int roleId = Role.GUEST.getId();
+        try (
+                Connection connection = SOURCE.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT role_id FROM \"user\" WHERE login=? AND password=?"
+                )
+        ) {
+            statement.setString(1, login);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                roleId = resultSet.getInt("roleId");
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return roleId;
+    }
+
+    @Override
+    public int getUserID(String login, String password) {
+        int userId = 0;
+        try (
+                Connection connection = SOURCE.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT id FROM \"user\" WHERE login=? AND password=?"
+                )
+        ) {
+            statement.setString(1, login);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                userId = resultSet.getInt("id");
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return userId;
     }
 }

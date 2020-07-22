@@ -1,6 +1,8 @@
 package persistence;
 
+import models.Role;
 import models.User;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -9,18 +11,21 @@ import java.util.List;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+@Ignore
 public class DBStoreTest {
     private final DBStore store = DBStore.getInstance();
 
     @Test
     public void whenAddOneThenDatabaseHasOne() {
         User user = new User(
-                        1,
-                        "riezenmark",
-                        "riezenmark",
-                        "riezenmark@gmail.com",
-                        Calendar.getInstance()
-                );
+                1,
+                "riezenmark",
+                "riezenmark",
+                "riezenmark@gmail.com",
+                "password",
+                Role.ADMIN,
+                Calendar.getInstance()
+        );
 
         store.add(user);
         List<User> resultList = store.getAll();
@@ -34,5 +39,6 @@ public class DBStoreTest {
         assertThat(resultUser.getName(), is("riezenmark"));
         assertThat(resultUser.getLogin(), is("riezenmark"));
         assertThat(resultUser.getEmail(), is("riezenmark@gmail.com"));
+        assertThat(store.size(), is(1));
     }
 }

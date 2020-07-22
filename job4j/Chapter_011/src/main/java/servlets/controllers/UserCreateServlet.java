@@ -1,6 +1,7 @@
-package servlets;
+package servlets.controllers;
 
 import logic.ValidateService;
+import models.Role;
 import models.User;
 
 import javax.servlet.ServletException;
@@ -11,7 +12,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class UserCreateServlet extends HttpServlet {
-    private final ValidateService logic = ValidateService.INSTANCE;
+    private final ValidateService logic = ValidateService.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -28,6 +29,8 @@ public class UserCreateServlet extends HttpServlet {
                         req.getParameter("name"),
                         req.getParameter("login"),
                         req.getParameter("email"),
+                        req.getParameter("password"),
+                        Role.getRole(req.getParameter("role")),
                         Calendar.getInstance()
                 )
         );

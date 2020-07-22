@@ -8,15 +8,23 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @ThreadSafe
-public enum MemoryStore implements Store<User> {
-    INSTANCE;
+public class MemoryStore implements Store<User> {
+    public static final MemoryStore INSTANCE = new MemoryStore();
 
     private final List<User> users = new CopyOnWriteArrayList<>();
 
+    public static MemoryStore getINSTANCE() {
+        return INSTANCE;
+    }
+
     @Override
-    public User add(User user) {
+    public int size() {
+        return users.size();
+    }
+
+    @Override
+    public void add(User user) {
         this.users.add(user);
-        return user;
     }
 
     @Override
@@ -25,9 +33,8 @@ public enum MemoryStore implements Store<User> {
     }
 
     @Override
-    public String delete(String id) {
+    public void delete(String id) {
         users.remove(this.findById(id));
-        return "DELETED";
     }
 
     @Override

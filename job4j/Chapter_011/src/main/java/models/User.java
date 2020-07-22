@@ -6,14 +6,43 @@ import java.util.Objects;
 
 public class User {
     private final int id;
-    private String name, login, email;
+    private String name, login, email, password;
+    private Role role;
     private final Calendar createDate;
 
-    public User(int id, String name, String login, String email, Calendar createDate) {
+    public User(
+            int id,
+            String name,
+            String login,
+            String email,
+            String password,
+            int roleId,
+            Calendar createDate
+    ) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
+        this.password = password;
+        this.role = Role.getRole(roleId);
+        this.createDate = createDate;
+    }
+
+    public User(
+            int id,
+            String name,
+            String login,
+            String email,
+            String password,
+            Role role,
+            Calendar createDate
+    ) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.role = role;
         this.createDate = createDate;
     }
 
@@ -48,6 +77,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public Date getCreateDate() {
