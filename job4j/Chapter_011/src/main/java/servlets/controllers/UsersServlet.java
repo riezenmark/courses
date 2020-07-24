@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class UsersServlet extends HttpServlet {
@@ -17,7 +16,7 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setAttribute("users", logic.getAll());
-        req.getRequestDispatcher("WEB-INF/views/list.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/views/index.html").forward(req, resp);
     }
 
     @Override

@@ -27,11 +27,16 @@
         <description>Update</description>
         <load-on-startup>3</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>JSONServlet</servlet-name>
+        <servlet-class>servlets.controllers.JSONServlet</servlet-class>
+        <load-on-startup>4</load-on-startup>
+    </servlet>
 
-    <filter-mapping>
+    <!--<filter-mapping>
         <filter-name>LogInFilter</filter-name>
         <url-pattern>*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -47,5 +52,9 @@
     <servlet-mapping>
         <servlet-name>UserUpdateServlet</servlet-name>
         <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JSONServlet</servlet-name>
+        <url-pattern>/json</url-pattern>
     </servlet-mapping>
 </web-app>

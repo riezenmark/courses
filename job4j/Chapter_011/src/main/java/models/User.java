@@ -6,7 +6,10 @@ import java.util.Objects;
 
 public class User {
     private final int id;
-    private String name, login, email, password;
+    private String name;
+    private String login;
+    private String email;
+    private String password;
     private Role role;
     private final Calendar createDate;
 
@@ -44,6 +47,26 @@ public class User {
         this.password = password;
         this.role = role;
         this.createDate = createDate;
+    }
+
+    public User(
+            int id,
+            String name,
+            String login,
+            String email,
+            String password,
+            String roleName,
+            long time
+    ) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.role = Role.getRole(roleName);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        this.createDate = calendar;
     }
 
     public User(int id) {
@@ -89,13 +112,6 @@ public class User {
 
     public Date getCreateDate() {
         return createDate.getTime();
-    }
-
-    @Override
-    public String toString() {
-        return getId() + " " + getName() + " "
-                + getLogin() + " " + getEmail()
-                + ", created: " + getCreateDate();
     }
 
     @Override
