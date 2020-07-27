@@ -23,6 +23,7 @@
         <module>Chapter_010</module>
         <module>Chapter_011</module>
         <module>Chapter_012</module>
+        <module>Chapter_013</module>
     </modules>
 
     <artifactId>job4j</artifactId>
